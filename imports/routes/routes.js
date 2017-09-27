@@ -4,6 +4,7 @@ import { Session } from 'meteor/session';
 import { Router, Route, browserHistory } from 'react-router';
 
 import Usrs from '../ui/Usrs';
+import HomePage from '../ui/HomePage';
 //import Resa from '../ui/Resa';
 import Login from '../ui/Login';
 //import Colis from '../ui/Colis' ;
@@ -16,11 +17,7 @@ export const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
     const isAuthenticatedPage = currentPagePrivacy === 'auth';
 
     if (isUnauthenticatedPage && isAuthenticated) {
-        if ( Roles.userIsInRole(Meteor.userId(), 'admin' ) ) {
-            browserHistory.replace('/users');
-        } else {
-            browserHistory.replace('/colis');
-        }
+        browserHistory.replace('/homepage');
     } else if (isAuthenticatedPage && !isAuthenticated) {
         browserHistory.replace('/');
     }
@@ -38,7 +35,7 @@ export const globalOnEnter = (nextState) => {
 
 const rls_0 = ['admin'];
 const rls_1 = ['admin','caisse'];
-const rls_2 = ['admin','caisse','colis'];
+const rls_2 = ['admin','medecin','colis'];
 
 const onEnterRolePage = (nextState) => {
     console.log(nextState);
@@ -56,6 +53,7 @@ export const routes = (
         <Route onEnter={globalOnEnter} onChange={globalOnChange}>
 
             <Route path="/users" component={Usrs} privacy="auth" nomane={rls_0} onEnter={onEnterRolePage}/>
+            <Route path="/homepage" component={HomePage} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage} />
             {/*<Route path="/departs" component={Departs} privacy="auth" nomane={rls_1} onEnter={onEnterRolePage}/>*/}
             {/*<Route path="/depenses" component={Depenses} privacy="auth" nomane={rls_1} onEnter={onEnterRolePage}/>*/}
             {/*<Route path="/colis" component={Colis} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage}/>*/}

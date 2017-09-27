@@ -87,9 +87,10 @@ export class MainMenu extends Component {
 
                     <Menu.Item
                         as={Link}
-                        to='/'
+                        to='/users'
                         name='admin'
                         active={activeItem === '/admin'}>
+                        <Icon name='settings' />
                         Admin
                     </Menu.Item>
 
@@ -98,6 +99,7 @@ export class MainMenu extends Component {
                         to='/'
                         name='tickets'
                         active={activeItem === '/tickets'}>
+                        <Icon name='treatment' />
                         Tickets
                     </Menu.Item>
 
@@ -106,6 +108,7 @@ export class MainMenu extends Component {
                         to='/'
                         name='pharmacie'
                         active={activeItem === '/pharmacie'}>
+                        <Icon name='first aid' />
                         Pharmacie
                     </Menu.Item>
 
@@ -114,6 +117,7 @@ export class MainMenu extends Component {
                         to='/'
                         name='caisse'
                         active={activeItem === '/caisse'}>
+                        <Icon name='visa' />
                         Caisse
                     </Menu.Item>
 
@@ -132,6 +136,7 @@ export class MainMenu extends Component {
                         to='/'
                         name='tickets'
                         active={activeItem === '/tickets'}>
+                        <Icon name='gamepad' />
                         Tickets
                     </Menu.Item>
 
@@ -147,6 +152,7 @@ export class MainMenu extends Component {
                         to='/'
                         name='pharmacie'
                         active={activeItem === '/pharmacie'}>
+                        <Icon name='gamepad' />
                         Pharmacie
                     </Menu.Item>
 
@@ -164,6 +170,7 @@ export class MainMenu extends Component {
                         to='/'
                         name='caisse'
                         active={activeItem === '/caisse'}>
+                        <Icon name='gamepad' />
                         Caisse
                     </Menu.Item>
 
@@ -180,7 +187,7 @@ export class MainMenu extends Component {
 
         return (
             <div>
-                <Menu size='large' color={menuColor} inverted>
+                <Menu size='huge' icon='labeled' color={menuColor} inverted>
                     <Grid>
                         {this.adminMenu()}
                     </Grid>
@@ -194,7 +201,7 @@ export class MainMenu extends Component {
                             onClose={this.handleClose.bind(this)}
                             dimmer='blurring'
                             size='small'
-                            trigger={<Menu.Item onClick={this.handleOpen.bind(this)}><Icon name='edit' /></Menu.Item>}>
+                            trigger={<Menu.Item onClick={this.handleOpen.bind(this)}><Icon name='edit' />Modifier</Menu.Item>}>
                             <Modal.Header>Changer votre mot de passe </Modal.Header>
                             <Modal.Content >
                                 {this.state.error ?
@@ -218,6 +225,7 @@ export class MainMenu extends Component {
 
                         <Menu.Item name='Se Deconnecter' onClick={() => Accounts.logout()} >
                             <Icon name='log out' />
+                            LogOut
                         </Menu.Item>
                     </Menu.Menu>
                 </Menu>
@@ -230,7 +238,7 @@ export class MainMenu extends Component {
 
 export default createContainer(() => {
     const activeItem = Session.get('activeItem');
-    const user = Meteor.user() || null;
+    const user = Meteor.user() || undefined ;
     return {
         Session,
         user,
