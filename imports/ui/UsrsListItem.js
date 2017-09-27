@@ -21,6 +21,12 @@ export class UsrsListItem extends React.Component{
                             <Grid.Column>
                                 <Button
                                     basic
+                                    name='admin'
+                                    size='mini'
+                                    onClick={this.onClickButton.bind(this)}>super admin</Button>
+
+                                <Button
+                                    basic
                                     name='infirmier'
                                     size='mini'
                                     onClick={this.onClickButton.bind(this)}>infirmier</Button>

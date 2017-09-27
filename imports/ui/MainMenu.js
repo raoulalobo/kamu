@@ -136,7 +136,7 @@ export class MainMenu extends Component {
                         to='/'
                         name='tickets'
                         active={activeItem === '/tickets'}>
-                        <Icon name='gamepad' />
+                        <Icon name='treatment' />
                         Tickets
                     </Menu.Item>
 
@@ -152,7 +152,7 @@ export class MainMenu extends Component {
                         to='/'
                         name='pharmacie'
                         active={activeItem === '/pharmacie'}>
-                        <Icon name='gamepad' />
+                        <Icon name='first aid' />
                         Pharmacie
                     </Menu.Item>
 
@@ -170,7 +170,7 @@ export class MainMenu extends Component {
                         to='/'
                         name='caisse'
                         active={activeItem === '/caisse'}>
-                        <Icon name='gamepad' />
+                        <Icon name='visa' />
                         Caisse
                     </Menu.Item>
 
