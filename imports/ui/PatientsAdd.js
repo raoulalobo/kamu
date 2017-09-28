@@ -23,7 +23,7 @@ export default class PatientsAdd extends React.Component {
 
         if ( dateNaissance && nomEtPrenom && tel && observations  ) {
 
-            const identifiant = new Date().getTime()+nomEtPrenom.trim().toLowerCase().replace(" ", "_")
+            const identifiant = new Date().getTime()+nomEtPrenom.trim().toLowerCase().replace(/[ ]/g, "_").replace(/[']/g, "_")
             console.log( identifiant ) ;
             /*Meteor.call('patients.insert',identifiant , dateNaissance , nomEtPrenom.trim().toLowerCase() ,tel.trim().toLowerCase() ,observations.trim().toLowerCase()  , (err, res) => {
                 if (!err) {
