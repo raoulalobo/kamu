@@ -7,6 +7,7 @@ import Usrs from '../ui/Usrs';
 import HomePage from '../ui/HomePage';
 //import Resa from '../ui/Resa';
 import Login from '../ui/Login';
+import Patients from '../ui/Patients';
 //import Colis from '../ui/Colis' ;
 //import Departs from '../ui/Departs' ;
 //import Depenses from '../ui/Depenses' ;
@@ -54,6 +55,7 @@ export const routes = (
 
             <Route path="/users" component={Usrs} privacy="auth" nomane={rls_0} onEnter={onEnterRolePage}/>
             <Route path="/homepage" component={HomePage} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage} />
+            <Route path="/patients" component={Patients} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage} />
             {/*<Route path="/departs" component={Departs} privacy="auth" nomane={rls_1} onEnter={onEnterRolePage}/>*/}
             {/*<Route path="/depenses" component={Depenses} privacy="auth" nomane={rls_1} onEnter={onEnterRolePage}/>*/}
             {/*<Route path="/colis" component={Colis} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage}/>*/}

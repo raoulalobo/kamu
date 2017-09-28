@@ -96,6 +96,15 @@ export class MainMenu extends Component {
 
                     <Menu.Item
                         as={Link}
+                        to='/patients'
+                        name='patients'
+                        active={activeItem === '/patients'}>
+                        <Icon name='users' />
+                        Patients
+                    </Menu.Item>
+
+                    <Menu.Item
+                        as={Link}
                         to='/'
                         name='tickets'
                         active={activeItem === '/tickets'}>
@@ -117,7 +126,7 @@ export class MainMenu extends Component {
                         to='/'
                         name='caisse'
                         active={activeItem === '/caisse'}>
-                        <Icon name='visa' />
+                        <Icon name='shop' />
                         Caisse
                     </Menu.Item>
 
@@ -130,6 +139,15 @@ export class MainMenu extends Component {
             return (
 
                 <Grid.Row only='mobile tablet computer'>
+
+                    <Menu.Item
+                        as={Link}
+                        to='/patients'
+                        name='patients'
+                        active={activeItem === '/patients'}>
+                        <Icon name='users' />
+                        Patients
+                    </Menu.Item>
 
                     <Menu.Item
                         as={Link}
@@ -170,7 +188,7 @@ export class MainMenu extends Component {
                         to='/'
                         name='caisse'
                         active={activeItem === '/caisse'}>
-                        <Icon name='visa' />
+                        <Icon name='shop' />
                         Caisse
                     </Menu.Item>
 

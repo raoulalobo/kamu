@@ -11,78 +11,48 @@ if ( Meteor.isServer ) {
     });
 
     Meteor.methods({
-        'patients.insert'( dateTime , dm , nomEtPrenom , dateNaissance , profession , tel,  entreprise , contact, telContact, assurance  ){
+        'patients.insert'( _id  , dateNaissance , nomEtPrenom , tel, observations  ){
             if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
 
             try {
                 new SimpleSchema({
-                    dateTime: {
+                    _id: {
+                        type: String,
+                        label: 'Identifiant Unique',
+                    },
+                    dateNaissance: {
                         type: Date,
-                        label: 'Date',
+                        label: 'Date de Naissance',
                     },
-                    imm: {
+                    nomEtPrenom: {
                         type: String,
-                        label: 'Immatriculation',
-                        min : 3,
-                        max : 5
+                        label: 'Nom et Prenom'
                     },
-                    dest: {
+                    tel: {
                         type: String,
-                        label: 'Destination',
-                        allowedValues: ['yaounde','douala'],
+                        label: 'Telephone'
                     },
-                    driver: {
+                    observations: {
                         type: String,
-                        label: 'Chauffeur'
-                    },
-                    fdr: {
-                        type: SimpleSchema.Integer,
-                        label: 'FDR',
-                    },
-                    amount: {
-                        type: SimpleSchema.Integer,
-                        label: 'Prix place',
-                    },
-                    seats: {
-                        type: SimpleSchema.Integer,
-                        label: 'Nbr de places',
-                    },
-                    leasing: {
-                        type: SimpleSchema.Integer,
-                        label: 'Location',
-                    },
-                    km: {
-                        type: SimpleSchema.Integer,
-                        label: 'Kmtrage',
-                    },
-                    obs: {
-                        type: String,
-                        label: 'Observations',
-                        min : 3,
-                        max : 70,
+                        label: 'Observations'
                     }
-                }).validate({dateTime , imm , dest , driver , fdr , amount , seats , leasing ,km , obs});
+                }).validate({ _id , dateNaissance  , nomEtPrenom , tel , observations });
             } catch (e) {
                 throw new Meteor.Error(400, e.message);
             }
 
             Patients.insert({
-                dateTime : dateTime.getTime(),
-                imm ,
-                dest ,
-                driver ,
-                fdr ,
-                amount ,
-                seats ,
-                leasing ,
-                km ,
-                obs,
+                _id,
+                dateNaissance ,
+                nomEtPrenom ,
+                tel,
+                observations,
                 userId: this.userId,
                 insertedAt : new Date().getTime(),
                 visible: true,
-            } , (err)=>{ if (!err)  { console.log(`Driver : ${driver} et Vehicule ${imm}`)} });
+            } , (err)=>{ if (!err)  { console.log(`Patients : nom ${nomEtPrenom} et profession ${profession}`)} });
         },
         'patients.delete'(id) {
             Patients.remove(id);
