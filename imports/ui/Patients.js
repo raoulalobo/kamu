@@ -2,7 +2,7 @@ import React, { Component }  from 'react';
 import { Grid , Header, Icon  } from 'semantic-ui-react'
 
 import MainMenu from './MainMenu';
-//import PatientsList from './PatientsList';
+import PatientsAdd from './PatientsAdd';
 //import PatientsAdd from './PatientsAdd';
 //import DepartSearch from './DepartSearch';
 //import PatientsHelpBar from './PatientsHelpBar';
@@ -36,7 +36,7 @@ export default class Patients extends React.Component{
 
                         <Grid.Column width={16}>
                             <Grid.Row>
-                                Ajouter un patient {/*<PatientsAdd/>*/}
+                                <PatientsAdd/>
                             </Grid.Row>
 
                             <h2></h2>

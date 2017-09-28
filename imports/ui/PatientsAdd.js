@@ -23,14 +23,16 @@ export default class PatientsAdd extends React.Component {
 
         if ( dateNaissance && nomEtPrenom && tel && observations  ) {
 
-            Meteor.call('patients.insert', dateNaissance , nomEtPrenom.trim().toUpperCase() ,dest.trim().toLocaleLowerCase() ,driver.trim().toLocaleLowerCase() , parseInt(fdr.trim()) ,  parseInt(amount.trim()) , parseInt(seat.trim()) , parseInt(leasing.trim()) , parseInt(km.trim()) , obs.trim() , (err, res) => {
+            const identifiant = new Date().getTime()+nomEtPrenom.trim().toLowerCase().replace(" ", "_")
+            console.log( identifiant ) ;
+            /*Meteor.call('patients.insert',identifiant , dateNaissance , nomEtPrenom.trim().toLowerCase() ,tel.trim().toLowerCase() ,observations.trim().toLowerCase()  , (err, res) => {
                 if (!err) {
                     this.handleClose();
                     Bert.alert( 'enregistrement ajoute avec succes.', 'danger', 'growl-top-right', 'fa-check'  )
                 } else {
                     this.setState({ error: err.reason });
                 }
-            });
+            });*/
 
         } else {
             this.setState({ error: 'All field are required' });
@@ -95,49 +97,20 @@ export default class PatientsAdd extends React.Component {
                                 </div>
                             </div>
                             <Form.Input label='Nom et Prenom'
-                                        name='imm'
+                                        name='nomEtPrenom'
                                         value={this.state.nomEtPrenom}
                                         onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='Destination'
-                                        name='dest'
-                                        value={this.state.dest}
-                                        onChange={this.onChangeField.bind(this)}/>
-                        </Form.Group>
-                        <Form.Group widths='equal'>
-                            <Form.Input label='Chauffeur'
-                                        name='driver'
-                                        value={this.state.driver}
-                                        onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='FDR'
-                                        name='fdr'
-                                        value={this.state.fdr}
-                                        onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='Prix place'
-                                        name='amount'
-                                        value={this.state.amount}
-                                        onChange={this.onChangeField.bind(this)}/>
-                        </Form.Group>
-                        <Form.Group widths='equal'>
-
-                            <Form.Input label='Nbr de places'
-                                        name='seat'
-                                        value={this.state.seat}
-                                        onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='Location'
-                                        name='leasing'
-                                        value={this.state.leasing}
-                                        onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='Kilometrage'
-                                        name='km'
-                                        value={this.state.km}
+                            <Form.Input label='Telephone'
+                                        name='tel'
+                                        value={this.state.tel}
                                         onChange={this.onChangeField.bind(this)}/>
                         </Form.Group>
 
                         <Form.TextArea label='Observations'
-                                       name='obs'
-                                       value={this.state.obs}
+                                       name='observations'
+                                       value={this.state.observations}
                                        onChange={this.onChangeField.bind(this)}/>
-                        <Form.Button fluid basic color='blue'>Enregistrer</Form.Button>
+                        <Form.Button fluid basic color='blue'>Ajouter et creer un ticket</Form.Button>
                     </Form>
                 </Modal.Content>
             </Modal>

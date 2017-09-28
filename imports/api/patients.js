@@ -52,7 +52,7 @@ if ( Meteor.isServer ) {
                 userId: this.userId,
                 insertedAt : new Date().getTime(),
                 visible: true,
-            } , (err)=>{ if (!err)  { console.log(`Patients : nom ${nomEtPrenom} et profession ${profession}`)} });
+            } , (err)=>{ if (!err)  { console.log(`Patients : nom ${nomEtPrenom} et profession ${observations}`)} });
         },
         'patients.delete'(id) {
             Patients.remove(id);
