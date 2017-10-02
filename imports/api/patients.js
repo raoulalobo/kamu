@@ -6,12 +6,12 @@ import { Mongo } from 'meteor/mongo';
 export const Patients = new Mongo.Collection('patients');
 
 if ( Meteor.isServer ) {
-    Meteor.publish('patients', function(dateStart, dateEnd ) {
-        return Patients.find({ dateTime: { $gte: dateStart , $lte: dateEnd } });
+    Meteor.publish('patients', function() {
+        return Patients.find({});
     });
 
     Meteor.methods({
-        'patients.insert'(  dateNaissance , nomEtPrenom , tel, observations  ){
+        'patients.insert'(  dateNaissance , nomEtPrenom , tel, genre, observations  ){
             if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
@@ -31,11 +31,15 @@ if ( Meteor.isServer ) {
                         type: String,
                         label: 'Telephone'
                     },
+                    genre: {
+                        type: String,
+                        label: 'Genre'
+                    },
                     observations: {
                         type: String,
                         label: 'Observations'
                     }
-                }).validate({ dateNaissance  , nomEtPrenom , tel , observations });
+                }).validate({ dateNaissance  , nomEtPrenom , tel , genre, observations });
             } catch (e) {
                 throw new Meteor.Error(400, e.message);
             }
@@ -45,6 +49,7 @@ if ( Meteor.isServer ) {
                 dateNaissance ,
                 nomEtPrenom ,
                 tel,
+                genre,
                 observations,
                 userId: this.userId,
                 insertedAt : new Date().getTime(),

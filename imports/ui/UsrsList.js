@@ -6,13 +6,13 @@ import { List } from 'semantic-ui-react'
 
 import {} from '../api/users';
 import UsrsListItem from './UsrsListItem';
-import ColisListEmptyItem from './ColisListEmptyItem.js';
+import EmptyListItem from './EmptyListItem.js';
 
 export const UsrsList = (props) => {
     return (
         <List celled selection verticalAlign='middle'>
-            { props.usrs.length === 0 ? <ColisListEmptyItem text="No Items, if is an unexpected result please contact the admin"/> : undefined }
-            { props.loading && !!props.usrs.length ? <ColisListEmptyItem text="Loading Data , please wait ..."/>  : undefined }
+            { props.usrs.length === 0 ? <EmptyListItem text="No Items, if is an unexpected result please contact the admin"/> : undefined }
+            { props.loading && !!props.usrs.length ? <EmptyListItem text="Loading Data , please wait ..."/>  : undefined }
             {!!props.usrs.length && !props.loading ? props.usrs.map((usr) => {
                 return <UsrsListItem key={usr._id} usr={usr}/>;
             }) : undefined }

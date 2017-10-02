@@ -3,7 +3,7 @@ import { Grid , Header, Icon  } from 'semantic-ui-react'
 
 import MainMenu from './MainMenu';
 import PatientsAdd from './PatientsAdd';
-//import PatientsAdd from './PatientsAdd';
+import PatientsList from './PatientsList';
 //import DepartSearch from './DepartSearch';
 //import PatientsHelpBar from './PatientsHelpBar';
 
@@ -49,7 +49,7 @@ export default class Patients extends React.Component{
                             <Grid.Row>
                                 <h2></h2>
                                 <div className="tableOverflow">
-                                    Liste de patients {/*<PatientsList/>*/}
+                                    <PatientsList/>
                                 </div>
                             </Grid.Row>
 

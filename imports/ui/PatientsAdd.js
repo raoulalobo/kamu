@@ -12,20 +12,21 @@ export default class PatientsAdd extends React.Component {
             nomEtPrenom: '' ,
             dateNaissance: '' ,
             tel:'',
+            genre:'',
             observations: '',
             error: ''
         };
     }
     onSubmit(e) {
-        const { dateNaissance, nomEtPrenom , tel, observations } = this.state;
+        const { dateNaissance, nomEtPrenom , tel, observations, genre } = this.state;
 
         e.preventDefault();
 
-        if ( dateNaissance && nomEtPrenom && tel && observations  ) {
+        if ( dateNaissance && nomEtPrenom && tel && observations && genre  ) {
 
             const identifiant = new Date().getTime()+nomEtPrenom.trim().toLowerCase().replace(/[ ]/g, "_").replace(/[']/g, "+")
             console.log( identifiant ) ;
-            Meteor.call('patients.insert', dateNaissance , nomEtPrenom.trim().toLowerCase() ,tel.trim().toLowerCase() ,observations.trim().toLowerCase()  , (err, res) => {
+            Meteor.call('patients.insert', dateNaissance , nomEtPrenom.trim().toLowerCase() ,tel.trim().toLowerCase() , genre, observations.trim().toLowerCase()  , (err, res) => {
                 if (!err) {
                     this.handleClose();
                     Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
@@ -44,6 +45,7 @@ export default class PatientsAdd extends React.Component {
             nomEtPrenom: '' ,
             dateNaissance: '' ,
             tel:'',
+            genre:'',
             observations: '',
             error: ''
         });
@@ -55,8 +57,12 @@ export default class PatientsAdd extends React.Component {
         this.setState( { [name] : value });
         console.log(`${name} -> ${value}`)
     }
-    render() {
 
+    render() {
+        const options = [
+            { key: 'm', text: 'Male', value: 'male' },
+            { key: 'f', text: 'Female', value: 'female' },
+        ]
         return (
 
             <Modal
@@ -76,6 +82,10 @@ export default class PatientsAdd extends React.Component {
                         undefined}
                     <Form>
                         <Form.Group widths='equal'>
+                            <Form.Input label='Nom et Prenom'
+                                        name='nomEtPrenom'
+                                        value={this.state.nomEtPrenom}
+                                        onChange={this.onChangeField.bind(this)}/>
                             <div className='field'>
                                 <label>Date Heure</label>
                                 <div className='ui input'>
@@ -96,10 +106,17 @@ export default class PatientsAdd extends React.Component {
                                     />
                                 </div>
                             </div>
-                            <Form.Input label='Nom et Prenom'
-                                        name='nomEtPrenom'
-                                        value={this.state.nomEtPrenom}
-                                        onChange={this.onChangeField.bind(this)}/>
+
+
+                        </Form.Group>
+
+                        <Form.Group widths='equal'>
+
+                            <Form.Select label='Genre'
+                                         name='genre'
+                                         options={options}
+                                         placeholder='Genre'
+                                         onChange={this.onChangeField.bind(this)}/>
                             <Form.Input label='Telephone'
                                         name='tel'
                                         value={this.state.tel}

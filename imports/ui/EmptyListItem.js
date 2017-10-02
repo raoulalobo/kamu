@@ -1,7 +1,7 @@
 import React from 'react';
 import { List} from 'semantic-ui-react'
 
-const ColisListEmptyItem = (props) => {
+const EmptyListItem = (props) => {
     return (
         <List.Item>
             <List.Content>
@@ -11,4 +11,4 @@ const ColisListEmptyItem = (props) => {
     );
 };
 
-export default ColisListEmptyItem;
+export default EmptyListItem;
