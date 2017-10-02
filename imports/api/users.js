@@ -17,7 +17,7 @@ Meteor.methods({
 
         Roles.addUsersToRoles(usrId,rls);
     },
-    'create.user' (email, password) {
+    'create.user' (username, email, password, profile) {
 
         new SimpleSchema({
             email: {
@@ -27,7 +27,7 @@ Meteor.methods({
         }).validate({ email });
 
         if (Meteor.isServer) {
-            Accounts.createUser({email, password});
+            Accounts.createUser({username, email, password ,profile });
         }
 
     },

@@ -11,17 +11,14 @@ if ( Meteor.isServer ) {
     });
 
     Meteor.methods({
-        'patients.insert'( _id  , dateNaissance , nomEtPrenom , tel, observations  ){
+        'patients.insert'(  dateNaissance , nomEtPrenom , tel, observations  ){
             if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
 
             try {
                 new SimpleSchema({
-                    _id: {
-                        type: String,
-                        label: 'Identifiant Unique',
-                    },
+
                     dateNaissance: {
                         type: Date,
                         label: 'Date de Naissance',
@@ -38,13 +35,13 @@ if ( Meteor.isServer ) {
                         type: String,
                         label: 'Observations'
                     }
-                }).validate({ _id , dateNaissance  , nomEtPrenom , tel , observations });
+                }).validate({ dateNaissance  , nomEtPrenom , tel , observations });
             } catch (e) {
                 throw new Meteor.Error(400, e.message);
             }
 
-            Patients.insert({
-                _id,
+            return Patients.insert({
+
                 dateNaissance ,
                 nomEtPrenom ,
                 tel,
@@ -52,7 +49,10 @@ if ( Meteor.isServer ) {
                 userId: this.userId,
                 insertedAt : new Date().getTime(),
                 visible: true,
-            } , (err)=>{ if (!err)  { console.log(`Patients : nom ${nomEtPrenom} et profession ${observations}`)} });
+            } , (err,id)=>{ if (!err)
+            { console.log(`Patients : id ${id} et profession ${observations}`)}
+
+            });
         },
         'patients.delete'(id) {
             Patients.remove(id);

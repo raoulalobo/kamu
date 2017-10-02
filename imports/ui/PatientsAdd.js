@@ -23,16 +23,16 @@ export default class PatientsAdd extends React.Component {
 
         if ( dateNaissance && nomEtPrenom && tel && observations  ) {
 
-            const identifiant = new Date().getTime()+nomEtPrenom.trim().toLowerCase().replace(/[ ]/g, "_").replace(/[']/g, "_")
+            const identifiant = new Date().getTime()+nomEtPrenom.trim().toLowerCase().replace(/[ ]/g, "_").replace(/[']/g, "+")
             console.log( identifiant ) ;
-            /*Meteor.call('patients.insert',identifiant , dateNaissance , nomEtPrenom.trim().toLowerCase() ,tel.trim().toLowerCase() ,observations.trim().toLowerCase()  , (err, res) => {
+            Meteor.call('patients.insert', dateNaissance , nomEtPrenom.trim().toLowerCase() ,tel.trim().toLowerCase() ,observations.trim().toLowerCase()  , (err, res) => {
                 if (!err) {
                     this.handleClose();
-                    Bert.alert( 'enregistrement ajoute avec succes.', 'danger', 'growl-top-right', 'fa-check'  )
+                    Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
                 } else {
                     this.setState({ error: err.reason });
                 }
-            });*/
+            });
 
         } else {
             this.setState({ error: 'All field are required' });
