@@ -1,11 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import Flatpickr from 'react-flatpickr';
 import {fr} from 'flatpickr/dist/l10n/fr.js';
 import { Router, Route, browserHistory } from 'react-router';
-import { Button, Modal , Form, Message } from 'semantic-ui-react'
+import { createContainer } from 'meteor/react-meteor-data';
+import { Button, Modal , Form, Message, Dropdown } from 'semantic-ui-react'
+import { Patients } from '../api/patients';
 
-export default class PatientsAdd extends React.Component {
+export  class PatientsAdd extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -61,10 +64,7 @@ export default class PatientsAdd extends React.Component {
     }
 
     render() {
-        const options = [
-            { key: 'm', text: 'Male', value: 'male' },
-            { key: 'f', text: 'Female', value: 'female' },
-        ]
+        const options = this.props.patients
         return (
 
             <Modal
@@ -83,42 +83,16 @@ export default class PatientsAdd extends React.Component {
                         :
                         undefined}
                     <Form>
-                        <Form.Group widths='equal'>
-                            <Form.Input label='Nom et Prenom'
-                                        name='nomEtPrenom'
-                                        value={this.state.nomEtPrenom}
-                                        onChange={this.onChangeField.bind(this)}/>
-                            <div className='field'>
-                                <label>Date Heure</label>
-                                <div className='ui input'>
-                                    <Flatpickr
-                                        as={Form.Field}
-                                        data-enable-time
-                                        onChange={ (startDate)  => {
-                                            this.setState( { dateNaissance : startDate[0] } ) ;
-                                            console.log(this.state.dateNaissance) ;
-                                        } }
-                                        options={
-                                            {
-                                                altInput: true,
-                                                time_24hr: true,
-                                                locale : fr
-                                            }
-                                        }
-                                    />
-                                </div>
-                            </div>
-
-
-                        </Form.Group>
 
                         <Form.Group widths='equal'>
-
-                            <Form.Select label='Genre'
-                                         name='genre'
-                                         options={options}
-                                         placeholder='Genre'
-                                         onChange={this.onChangeField.bind(this)}/>
+                            <Form.Dropdown
+                                        label='Patients'
+                                        minCharacters={0}
+                                        name='patients'
+                                        placeholder='Select Friend'
+                                        search
+                                        selection
+                                        options={options} />
                             <Form.Input label='Telephone'
                                         name='tel'
                                         value={this.state.tel}
@@ -136,3 +110,26 @@ export default class PatientsAdd extends React.Component {
         );
     }
 }
+
+PatientsAdd.propTypes = {
+    patients: PropTypes.array
+};
+
+export default createContainer(() => {
+
+
+    const patientsHandle = Meteor.subscribe('patients');
+    const loading = !patientsHandle.ready();
+
+    return {
+        Session,
+        loading,
+        patients : Patients.find({visible: true}).fetch().map((patient)=>{
+            return {
+                key: patient._id,
+                text: patient.nomEtPrenom,
+                value: patient.nomEtPrenom
+            }
+        })
+    };
+}, PatientsAdd );

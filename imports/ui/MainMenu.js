@@ -105,7 +105,7 @@ export class MainMenu extends Component {
 
                     <Menu.Item
                         as={Link}
-                        to='/'
+                        to='/tickets'
                         name='tickets'
                         active={activeItem === '/tickets'}>
                         <Icon name='treatment' />
