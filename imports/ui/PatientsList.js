@@ -19,11 +19,13 @@ export class PatientsList extends React.Component{
     componentWillReceiveProps(nextProps) {
 
         const { patients } = nextProps;
+        console.log(this.props)
+        console.log(nextProps)
         this.props.Session.set('patients', patients);
 
     }
     componentWillUnmount() {
-
+        Meteor.subscribe('patients').stop()
     }
     render(){
         return (

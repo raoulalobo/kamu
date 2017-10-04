@@ -23,13 +23,13 @@ export const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
 };
 export const globalOnChange = (prevState, nextState) => {
     globalOnEnter(nextState);
-    console.log(prevState,nextState);
+    //console.log(prevState,nextState);
 };
 export const globalOnEnter = (nextState) => {
     const lastRoute = nextState.routes[nextState.routes.length - 1];
-    console.log(nextState);
+    //console.log(nextState);
     Session.set('currentPagePrivacy', lastRoute.privacy);
-    //Session.set('permissionRole', lastRoute.nomane);
+    Session.set('permissionRole', lastRoute.nomane);
 };
 
 const rls_0 = ['admin'];
@@ -37,7 +37,7 @@ const rls_1 = ['admin','caisse'];
 const rls_2 = ['admin','medecin','colis'];
 
 const onEnterRolePage = (nextState) => {
-    console.log(nextState);
+    //console.log(nextState);
     const lastRoute = nextState.routes[nextState.routes.length - 1];
     Session.set('permissionRole', lastRoute.nomane);
     const permissionRole = Session.get('permissionRole');
