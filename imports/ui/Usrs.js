@@ -5,6 +5,8 @@ import { Grid , Header, Icon } from 'semantic-ui-react'
 import MainMenu from "./MainMenu";
 import UsrsList from "./UsrsList";
 import UsrAdd from "./UsrAdd";
+import MyHOC from "./HighOrderComponent";
+
 
 
 export class Usrs extends React.Component{
@@ -51,6 +53,7 @@ export class Usrs extends React.Component{
                             <Grid.Column width={13}>
                                 <Grid.Row>
                                     <h2>*SearchBar if needed</h2>
+                                    <MyHOC/>
                                 </Grid.Row>
                                 <Grid.Row >
                                     <h2></h2>
