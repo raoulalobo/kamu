@@ -8,7 +8,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Button, Modal , Form, Message, Dropdown } from 'semantic-ui-react'
 import { Patients } from '../api/patients';
 
-export  class PatientsAdd extends React.Component {
+export class TicketsAdd extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -62,7 +62,16 @@ export  class PatientsAdd extends React.Component {
         this.setState( { [name] : value });
         console.log(`${name} -> ${value}`)
     }
+    componentWillReceiveProps(nextProps) {
 
+        const { patients } = nextProps;
+        console.log(this.props)
+        console.log(nextProps)
+
+    }
+    componentWillUnmount() {
+        Meteor.subscribe('patients').stop()
+    }
     render() {
         const optionsPatients = this.props.patients;
         const optionsUsers = this.props.usrs;
@@ -163,16 +172,21 @@ export  class PatientsAdd extends React.Component {
     }
 }
 
-PatientsAdd.propTypes = {
+TicketsAdd.propTypes = {
     patients: PropTypes.array
 };
 
 export default createContainer(() => {
 
 
+<<<<<<< HEAD
     const patientsHandle = Meteor.subscribe('patients');
     const usrsHandle = Meteor.subscribe('allUsers');
     const loading = !patientsHandle.ready() && !usrsHandle.ready();
+=======
+    const patientsTicketHandle = Meteor.subscribe('patients');
+    const loading = !patientsTicketHandle.ready();
+>>>>>>> 12bf81e936eaf0c5a95105145ae1e08ae0b2dcc4
 
     return {
         Session,
@@ -192,4 +206,4 @@ export default createContainer(() => {
             }
         })
     };
-}, PatientsAdd );
+}, TicketsAdd );
