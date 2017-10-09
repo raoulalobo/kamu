@@ -13,10 +13,23 @@ export class TicketsAdd extends React.Component {
         super(props);
         this.state = {
             modalOpen: false,
-            nomEtPrenom: '' ,
-            dateNaissance: '' ,
-            tel:'',
-            genre:'',
+            patients: '',
+            medecins: '',
+            poids: '',
+            temperature: '',
+            pie: '',
+            fc: '',
+            ta: '',
+            glycemie: '',
+            fre: '',
+            spo2: '',
+            motifs_consultation: '',
+            histoire_maladie: '',
+            antecedents: '',
+            diagnostique: '',
+            ordonnance_traitement: '',
+            surveillance: '',
+            rendez_vous: '',
             observations: '',
             error: ''
         };
@@ -47,10 +60,23 @@ export class TicketsAdd extends React.Component {
     handleClose() {
         this.setState({
             modalOpen: false,
-            nomEtPrenom: '' ,
-            dateNaissance: '' ,
-            tel:'',
-            genre:'',
+            patients: '',
+            medecins: '',
+            poids: '',
+            temperature: '',
+            pie: '',
+            fc: '',
+            ta: '',
+            glycemie: '',
+            fre: '',
+            spo2: '',
+            motifs_consultation: '',
+            histoire_maladie: '',
+            antecedents: '',
+            diagnostique: '',
+            ordonnance_traitement: '',
+            surveillance: '',
+            rendez_vous: '',
             observations: '',
             error: ''
         });
@@ -82,8 +108,8 @@ export class TicketsAdd extends React.Component {
                 open={this.state.modalOpen}
                 onClose={this.handleClose.bind(this)}
                 size='large'
-                trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter un patient</Button>}>
-                <Modal.Header>Ajouter un patient</Modal.Header>
+                trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter un ticket</Button>}>
+                <Modal.Header>Ajouter un ticket</Modal.Header>
                 <Modal.Content >
                     {this.state.error ?
                         <Message negative>
@@ -99,25 +125,31 @@ export class TicketsAdd extends React.Component {
                                         label='Patients'
                                         minCharacters={0}
                                         name='patients'
-                                        placeholder='Select Friend'
+                                        placeholder='Selectionnez 01 patient'
                                         search
                                         selection
-                                        options={optionsPatients} />
-                            <Form.Input label='Telephone'
-                                        name='tel'
+                                        options={optionsPatients}
+                                        onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='Assurance'
+                                        name='assurance'
+                                        value={this.state.tel}
+                                        onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='Societe'
+                                        name='societe'
                                         value={this.state.tel}
                                         onChange={this.onChangeField.bind(this)}/>
                         </Form.Group>
 
                         <Form.Group widths='equal'>
                             <Form.Dropdown
-                                label='Patients'
+                                label='Medecins'
                                 minCharacters={0}
-                                name='patients'
-                                placeholder='Select Friend'
+                                name='medecins'
+                                placeholder='Selectionnez 01 medecin'
                                 search
                                 selection
-                                options={optionsUsers} />
+                                options={optionsUsers}
+                                onChange={this.onChangeField.bind(this)}/>
                             <Form.Input label='Telephone'
                                         name='tel'
                                         value={this.state.tel}
@@ -127,37 +159,77 @@ export class TicketsAdd extends React.Component {
                         <Form.Group widths='equal'>
 
                             <Form.Input label='Poids'
-                                        name='tel'
-                                        value={this.state.tel}
+                                        name='poids'
+                                        value={this.state.poids}
                                         onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='T'
-                                        name='tel'
-                                        value={this.state.tel}
+                            <Form.Input label='Temp.'
+                                        name='temperature'
+                                        value={this.state.temperature}
                                         onChange={this.onChangeField.bind(this)}/>
                             <Form.Input label='Pi'
-                                        name='tel'
-                                        value={this.state.tel}
+                                        name='pie'
+                                        value={this.state.pie}
                                         onChange={this.onChangeField.bind(this)}/>
                             <Form.Input label='FC'
-                                        name='tel'
-                                        value={this.state.tel}
+                                        name='fc'
+                                        value={this.state.fc}
+                                        onChange={this.onChangeField.bind(this)}/>
+                        </Form.Group>
+
+                        <Form.Group widths='equal'>
+
+                            <Form.Input label='T.A'
+                                        name='ta'
+                                        value={this.state.ta}
+                                        onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='Glycemie'
+                                        name='glycemie'
+                                        value={this.state.glycemie}
+                                        onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='FR'
+                                        name='fre'
+                                        value={this.state.fre}
+                                        onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='SPo2'
+                                        name='spo2'
+                                        value={this.state.spo2}
                                         onChange={this.onChangeField.bind(this)}/>
                         </Form.Group>
 
                         <Form.TextArea label='Motifs de consultations'
-                                       name='observations'
-                                       value={this.state.observations}
+                                       name='motifs_consulation'
+                                       value={this.state.motifs_consulation}
                                        onChange={this.onChangeField.bind(this)}/>
 
                         <Form.TextArea label='Histoire de la maladie'
-                                       name='observations'
-                                       value={this.state.observations}
+                                       name='histoire_maladie'
+                                       value={this.state.histoire_maladie}
                                        onChange={this.onChangeField.bind(this)}/>
 
 
                         <Form.TextArea label='Antecedents'
-                                       name='observations'
-                                       value={this.state.observations}
+                                       name='antecedents'
+                                       value={this.state.antecedents}
+                                       onChange={this.onChangeField.bind(this)}/>
+
+                        <Form.TextArea label='Diagnostique'
+                                       name='diagnostique'
+                                       value={this.state.diagnostique}
+                                       onChange={this.onChangeField.bind(this)}/>
+
+                        <Form.TextArea label='Ordonnance / Traitement '
+                                       name='ordonnance_traitement'
+                                       value={this.state.ordonnance_traitement}
+                                       onChange={this.onChangeField.bind(this)}/>
+
+                        <Form.TextArea label='Surveillance'
+                                       name='surveillance'
+                                       value={this.state.surveillance}
+                                       onChange={this.onChangeField.bind(this)}/>
+
+                        <Form.TextArea label='Rendez-vous'
+                                       name='rendez_vous'
+                                       value={this.state.rendez_vous}
                                        onChange={this.onChangeField.bind(this)}/>
 
                         <Form.TextArea label='Observations'

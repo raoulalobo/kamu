@@ -89,7 +89,7 @@ export default class PatientsAdd extends React.Component {
                                         value={this.state.nomEtPrenom}
                                         onChange={this.onChangeField.bind(this)}/>
                             <div className='field'>
-                                <label>Date Heure</label>
+                                <label>Date Naissance</label>
                                 <div className='ui input'>
                                     <Flatpickr
                                         as={Form.Field}
@@ -120,6 +120,45 @@ export default class PatientsAdd extends React.Component {
                                          placeholder='Genre'
                                          onChange={this.onChangeField.bind(this)}/>
                             <Form.Input label='Telephone'
+                                        name='tel'
+                                        value={this.state.tel}
+                                        onChange={this.onChangeField.bind(this)}/>
+                        </Form.Group>
+
+                        <Form.Group widths='equal'>
+
+                            <Form.Select label='Contact 1'
+                                         name='genre'
+                                         options={options}
+                                         placeholder='Genre'
+                                         onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='Telephone Contact 1'
+                                        name='tel'
+                                        value={this.state.tel}
+                                        onChange={this.onChangeField.bind(this)}/>
+                        </Form.Group>
+
+                        <Form.Group widths='equal'>
+
+                            <Form.Select label='Contact 2'
+                                         name='genre'
+                                         options={options}
+                                         placeholder='Genre'
+                                         onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='Telephone Contact 2'
+                                        name='tel'
+                                        value={this.state.tel}
+                                        onChange={this.onChangeField.bind(this)}/>
+                        </Form.Group>
+
+                        <Form.Group widths='equal'>
+
+                            <Form.Select label='Contact 3'
+                                         name='genre'
+                                         options={options}
+                                         placeholder='Genre'
+                                         onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='Telephone Contact 3'
                                         name='tel'
                                         value={this.state.tel}
                                         onChange={this.onChangeField.bind(this)}/>
