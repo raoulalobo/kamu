@@ -34,6 +34,6 @@ export default createContainer(() => {
 
     return {
         loading,
-        usrs: Meteor.users.find().fetch()
+        usrs: Meteor.users.find({roles:{$ne:"admin"}}).fetch()
     };
 }, UsrsList);

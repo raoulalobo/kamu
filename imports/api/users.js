@@ -15,7 +15,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-        Roles.addUsersToRoles(usrId,rls);
+        Roles.setUserRoles(usrId,rls);
     },
     'create.user' (username, email, password, profile) {
 

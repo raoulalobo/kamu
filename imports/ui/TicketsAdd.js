@@ -64,14 +64,15 @@ export  class PatientsAdd extends React.Component {
     }
 
     render() {
-        const options = this.props.patients
+        const optionsPatients = this.props.patients;
+        const optionsUsers = this.props.usrs;
         return (
 
             <Modal
                 onSubmit={this.onSubmit.bind(this)}
                 open={this.state.modalOpen}
                 onClose={this.handleClose.bind(this)}
-                size='small'
+                size='large'
                 trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter un patient</Button>}>
                 <Modal.Header>Ajouter un patient</Modal.Header>
                 <Modal.Content >
@@ -92,12 +93,63 @@ export  class PatientsAdd extends React.Component {
                                         placeholder='Select Friend'
                                         search
                                         selection
-                                        options={options} />
+                                        options={optionsPatients} />
                             <Form.Input label='Telephone'
                                         name='tel'
                                         value={this.state.tel}
                                         onChange={this.onChangeField.bind(this)}/>
                         </Form.Group>
+
+                        <Form.Group widths='equal'>
+                            <Form.Dropdown
+                                label='Patients'
+                                minCharacters={0}
+                                name='patients'
+                                placeholder='Select Friend'
+                                search
+                                selection
+                                options={optionsUsers} />
+                            <Form.Input label='Telephone'
+                                        name='tel'
+                                        value={this.state.tel}
+                                        onChange={this.onChangeField.bind(this)}/>
+                        </Form.Group>
+
+                        <Form.Group widths='equal'>
+
+                            <Form.Input label='Poids'
+                                        name='tel'
+                                        value={this.state.tel}
+                                        onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='T'
+                                        name='tel'
+                                        value={this.state.tel}
+                                        onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='Pi'
+                                        name='tel'
+                                        value={this.state.tel}
+                                        onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='FC'
+                                        name='tel'
+                                        value={this.state.tel}
+                                        onChange={this.onChangeField.bind(this)}/>
+                        </Form.Group>
+
+                        <Form.TextArea label='Motifs de consultations'
+                                       name='observations'
+                                       value={this.state.observations}
+                                       onChange={this.onChangeField.bind(this)}/>
+
+                        <Form.TextArea label='Histoire de la maladie'
+                                       name='observations'
+                                       value={this.state.observations}
+                                       onChange={this.onChangeField.bind(this)}/>
+
+
+                        <Form.TextArea label='Antecedents'
+                                       name='observations'
+                                       value={this.state.observations}
+                                       onChange={this.onChangeField.bind(this)}/>
 
                         <Form.TextArea label='Observations'
                                        name='observations'
@@ -119,11 +171,19 @@ export default createContainer(() => {
 
 
     const patientsHandle = Meteor.subscribe('patients');
-    const loading = !patientsHandle.ready();
+    const usrsHandle = Meteor.subscribe('allUsers');
+    const loading = !patientsHandle.ready() && !usrsHandle.ready();
 
     return {
         Session,
         loading,
+        usrs: Meteor.users.find({roles:"medecin"}).fetch().map((usr)=>{
+            return {
+                key: usr._id,
+                text: usr.emails[0].address,
+                value: usr._id
+            }
+        }),
         patients : Patients.find({visible: true}).fetch().map((patient)=>{
             return {
                 key: patient._id,
