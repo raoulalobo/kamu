@@ -178,15 +178,9 @@ TicketsAdd.propTypes = {
 
 export default createContainer(() => {
 
-
-<<<<<<< HEAD
     const patientsHandle = Meteor.subscribe('patients');
     const usrsHandle = Meteor.subscribe('allUsers');
     const loading = !patientsHandle.ready() && !usrsHandle.ready();
-=======
-    const patientsTicketHandle = Meteor.subscribe('patients');
-    const loading = !patientsTicketHandle.ready();
->>>>>>> 12bf81e936eaf0c5a95105145ae1e08ae0b2dcc4
 
     return {
         Session,
