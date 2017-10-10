@@ -108,8 +108,17 @@ export class MainMenu extends Component {
                         to='/tickets'
                         name='tickets'
                         active={activeItem === '/tickets'}>
-                        <Icon name='treatment' />
+                        <Icon name='ticket' />
                         Tickets
+                    </Menu.Item>
+
+                    <Menu.Item
+                        as={Link}
+                        to='/fiches-medicales'
+                        name='suiviMedical'
+                        active={activeItem === '/fiches-medicales'}>
+                        <Icon name='treatment' />
+                        Suivi Medical
                     </Menu.Item>
 
                     <Menu.Item

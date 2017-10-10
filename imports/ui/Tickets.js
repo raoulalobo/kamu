@@ -21,7 +21,7 @@ export default class Tickets extends React.Component{
                 <Grid container divided>
                     <Grid.Row>
                         <Header as='h2'>
-                            <Icon circular name='users' />
+                            <Icon circular name='ticket' />
                             <Header.Content>
                                 Enregistrement des tickets
                                 <Header.Subheader>

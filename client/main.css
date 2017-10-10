@@ -28,3 +28,7 @@
 .tableOverflow {
     overflow-x: scroll;
 }
+
+.ourDropdown{
+    padding: 0px 15px;
+}
