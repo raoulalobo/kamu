@@ -36,12 +36,12 @@ export default class FicheMedicales extends React.Component{
                             <Grid.Column width={3}>
                                 <Menu vertical>
 
-                                    <Menu.Item name='inbox' >
+                                    <Menu.Item name='inbox'>
                                         <Label color='teal'>1</Label>
                                         Fiches
                                     </Menu.Item>
 
-                                    <Menu.Item name='spam' >
+                                    <Menu.Item name='spam'>
                                         <Label>51</Label>
                                         Ordonnances
                                     </Menu.Item>

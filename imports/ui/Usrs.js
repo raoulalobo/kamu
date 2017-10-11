@@ -1,26 +1,44 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Grid , Header, Icon } from 'semantic-ui-react'
+import { Grid , Header, Icon , Label, Menu  } from 'semantic-ui-react'
+
+
+//import DroitsList from "./DroitsList";
+//import DroitsAdd from "./DroitsAdd";
 
 import MainMenu from "./MainMenu";
-import DroitsList from "./DroitsList";
 import UsrsList from "./UsrsList";
 import UsrAdd from "./UsrAdd";
-import DroitsAdd from "./DroitsAdd";
+import PolicesAdd from "./PolicesAdd";
+
 
 
 export class Usrs extends React.Component{
     constructor (props) {
         super(props);
         this.state = {
-            currentUser : Meteor.user()
+            currentUser : Meteor.user(),
+            affichage: '',
         }
     }
-    componentWillReceiveProps(nextProps) {
-        const { user } = nextProps;
+    componentWillReceiveProps(nextProps,nextState) {
+        /*const { user } = nextProps;
         if (user) {
             this.setState({currentUser: user._id});
-        }
+        }*/
+        const { affichage } = nextState;
+        //console.log(`props : ${nextProps}`)
+        console.log(`state : ${affichage}`)
+    }
+    componentWillUpdate(nextProps, nextState){
+        const { affichage } = nextState;
+        //console.log(`props : ${nextProps}`)
+        console.log(`state : ${affichage}`)
+    }
+    onChangeField(e, { name }) {
+        this.setState( { affichage : name });
+        console.log(` affichage -> ${name}`)
+
     }
     adminLevel() {
         if ( Roles.userIsInRole(this.state.currentUser, 'admin') ) {
@@ -31,40 +49,73 @@ export class Usrs extends React.Component{
                     <div className='mgnTopMainGrid'>
 
                     </div>
-                    <Grid container divided>
-                        <Grid.Row>
-                            <Header as='h2'>
-                                <Icon circular name='users' />
-                                <Header.Content>
-                                    Gestion Users
-                                    <Header.Subheader>
-                                        gerer les utilisateurs
-                                    </Header.Subheader>
-                                </Header.Content>
-                            </Header>
-                        </Grid.Row>
+                    <div className='ourDropdown'>
 
-                        <Grid.Row>
+                        <Grid divided>
+                            <Grid.Row>
+                                <Header as='h2'>
+                                    <Icon circular name='settings' />
+                                    <Header.Content>
+                                        Gestion des parametres
+                                        <Header.Subheader>
+                                            gerer les utilisateurs, polices, etc ...
+                                        </Header.Subheader>
+                                    </Header.Content>
+                                </Header>
+                            </Grid.Row>
 
-                            <Grid.Column width={3} only='tablet computer'>
-                                <UsrAdd/>
-                                <DroitsAdd/>
-                                <DroitsList/>
-                            </Grid.Column>
+                            <Grid.Row>
 
-                            <Grid.Column width={13}>
-                                <Grid.Row>
-                                    <h2>*SearchBar if needed</h2>
-                                </Grid.Row>
-                                <Grid.Row >
-                                    <h2></h2>
-                                    <UsrsList/>
-                                </Grid.Row>
-                            </Grid.Column>
+                                <Grid.Column width={3}>
 
-                        </Grid.Row>
+                                    {/*<DroitsAdd/>*/}
+                                    {/*<DroitsList/>*/}
 
-                    </Grid>
+                                    <Menu vertical>
+
+                                        <Menu.Item name='users' onClick={this.onChangeField.bind(this)}>
+                                            <Label color='teal'>1</Label>
+                                            Utilisateurs
+                                        </Menu.Item>
+
+                                        <Menu.Item name='polices' onClick={this.onChangeField.bind(this)}>
+                                            <Label>51</Label>
+                                            Polices Assurances
+                                        </Menu.Item>
+
+                                        <Menu.Item name='updates' onClick={this.onChangeField.bind(this)}>
+                                            <Label>1</Label>
+                                            Chambres
+                                        </Menu.Item>
+
+                                        <Menu.Item name='updates' onClick={this.onChangeField.bind(this)}>
+                                            <Label>1</Label>
+                                            Ambulances
+                                        </Menu.Item>
+
+                                    </Menu>
+
+                                </Grid.Column>
+
+                                <Grid.Column width={13}>
+                                    <Grid.Row>
+                                        <UsrAdd/>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <h2>*SearchBar if needed</h2>
+                                    </Grid.Row>
+                                    <Grid.Row >
+                                        <h2></h2>
+                                        <UsrsList/>
+                                    </Grid.Row>
+                                </Grid.Column>
+
+                            </Grid.Row>
+
+                        </Grid>
+
+                    </div>
+
                     <div className='mgnBotMainGrid'>
 
                     </div>

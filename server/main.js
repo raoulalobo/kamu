@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
 import '../imports/api/users';
+import '../imports/api/polices';
 import '../imports/api/tickets';
 import '../imports/api/droits';
 import '../imports/api/patients';
