@@ -8,8 +8,8 @@ import { Grid , Header, Icon , Label, Menu  } from 'semantic-ui-react'
 
 import MainMenu from "./MainMenu";
 import UsrsList from "./UsrsList";
-import UsrAdd from "./UsrAdd";
-import PolicesAdd from "./PolicesAdd";
+import ComposantsAdmin from "./ComposantsAdmin";
+
 
 
 
@@ -73,12 +73,12 @@ export class Usrs extends React.Component{
 
                                     <Menu vertical>
 
-                                        <Menu.Item name='users' onClick={this.onChangeField.bind(this)}>
+                                        <Menu.Item name='ursadd' onClick={this.onChangeField.bind(this)}>
                                             <Label color='teal'>1</Label>
                                             Utilisateurs
                                         </Menu.Item>
 
-                                        <Menu.Item name='polices' onClick={this.onChangeField.bind(this)}>
+                                        <Menu.Item name='droitsadd' onClick={this.onChangeField.bind(this)}>
                                             <Label>51</Label>
                                             Polices Assurances
                                         </Menu.Item>
@@ -99,7 +99,7 @@ export class Usrs extends React.Component{
 
                                 <Grid.Column width={13}>
                                     <Grid.Row>
-                                        <UsrAdd/>
+                                        <ComposantsAdmin  tag={this.state.affichage} />
                                     </Grid.Row>
                                     <Grid.Row>
                                         <h2>*SearchBar if needed</h2>
