@@ -35,8 +35,8 @@ export class PolicesList extends React.Component{
                         <Table.Row>
                             <Table.HeaderCell>Numero_Police</Table.HeaderCell>
                             <Table.HeaderCell>Societe</Table.HeaderCell>
-                            <Table.HeaderCell>Taux_Couverture</Table.HeaderCell>
                             <Table.HeaderCell>Libelle</Table.HeaderCell>
+                            <Table.HeaderCell>Taux_Couverture (%)</Table.HeaderCell>
                             <Table.HeaderCell>Observations</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>

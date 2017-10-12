@@ -1,11 +1,9 @@
 import React , { Component } from 'react';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Session } from 'meteor/session';
-import Flatpickr from 'react-flatpickr';
-import {fr} from 'flatpickr/dist/l10n/fr.js';
-import { Table, Button, Modal , Form, Message, Icon } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 
 export class PolicesListItem extends Component {
 
@@ -26,9 +24,10 @@ export class PolicesListItem extends Component {
         return (
             <Table.Row>
                 <Table.Cell>{this.props.police.numeroPolice}</Table.Cell>
-                <Table.Cell>{!!this.props.police.societe}</Table.Cell>
+                <Table.Cell>{this.props.police.societe}</Table.Cell>
                 <Table.Cell>{this.props.police.libelle}</Table.Cell>
                 <Table.Cell>{this.props.police.tauxCouverture}</Table.Cell>
+                <Table.Cell>{this.props.police.observations}</Table.Cell>
             </Table.Row>
         );
     }

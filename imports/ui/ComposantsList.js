@@ -6,10 +6,11 @@ import PatientsList from "./PatientsList";
 class ComposantsList extends Component {
     components = {
         usr: UsrsList,
-        polices: PatientsList
+        patients: PatientsList,
+        polices: PolicesList,
     };
     render() {
-        const TagName = this.components[this.props.tag || 'polices'];
+        const TagName = this.components[this.props.tag || 'usr'];
         return <TagName />
     }
 }

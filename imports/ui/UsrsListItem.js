@@ -37,7 +37,7 @@ export class UsrsListItem extends React.Component{
             { key: 'medecin', text: 'Medecin', value: 'medecin' },
             { key: 'caisse', text: 'Caisse', value: 'caisse' },
             { key: 'infirmier', text: 'Infirmier', value: 'infirmier' },
-        ]
+        ];
 
         return (
             <List.Item>
@@ -54,7 +54,6 @@ export class UsrsListItem extends React.Component{
                                     button
                                     options={options}
                                     onChange={this.onChangeField.bind(this)} />
-
                                 <Button
                                     basic
                                     color='red'
@@ -68,7 +67,7 @@ export class UsrsListItem extends React.Component{
                 {/*<Image avatar src='/assets/images/avatar/small/lena.png' />*/}
                 <List.Content>
                     <List.Header>{this.props.usr.emails[0].address.split('@')[0]} / { !!this.props.usr.profile ? this.props.usr.profile.telephone : 'Pas de numero'}</List.Header>
-                    {!!this.props.usr.roles ? 'Droit: '+this.props.usr.roles : 'Aucun droit'}
+                    {!!this.props.usr.roles ? 'Role: '+this.props.usr.roles : 'Aucun role'}
                 </List.Content>
             </List.Item>
         );

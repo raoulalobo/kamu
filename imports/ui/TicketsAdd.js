@@ -5,6 +5,7 @@ import { Router, Route, browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Button, Modal , Form, Message, Dropdown } from 'semantic-ui-react'
 import { Patients } from '../api/patients';
+import { Polices } from '../api/polices';
 
 export class TicketsAdd extends React.Component {
     constructor(props) {
@@ -66,13 +67,16 @@ export class TicketsAdd extends React.Component {
     }
     componentWillUnmount() {
         Meteor.subscribe('patients').stop()
+        Meteor.subscribe('polices').stop()
     }
     render() {
         const optionsPatients = this.props.patients;
         const optionsUsers = this.props.usrs;
+        const optionsPolices = this.props.polices;
         const optionsAssurances = [
-            { key: 'OUI', text: 'OUI', value: 'OUI' },
-            { key: 'NON', text: 'NON', value: 'NON' },
+            { key: 'OUI', text: 'Nuits', value: 'OUI' },
+            { key: 'NON', text: 'Jours', value: 'NON' },
+            { key: 'MAYBE', text: 'Feries', value: 'NON' },
         ];
         return (
 
@@ -117,19 +121,24 @@ export class TicketsAdd extends React.Component {
 
                         <Form.Group widths='equal'>
                             <Form.Dropdown
-                                label='Assurance'
+                                label='Polices'
                                 minCharacters={0}
-                                name='assure'
+                                name='polices'
+                                placeholder='Selectionnez ...'
+                                search
+                                selection
+                                options={optionsPolices}
+                                onChange={this.onChangeField.bind(this)}/>
+
+                            <Form.Dropdown
+                                label='Tarifs'
+                                minCharacters={0}
+                                name='tarifs'
                                 placeholder='Selectionnez ...'
                                 search
                                 selection
                                 options={optionsAssurances}
                                 onChange={this.onChangeField.bind(this)}/>
-
-                            <Form.Input label='Societe'
-                                        name='societe'
-                                        value={this.state.tel}
-                                        onChange={this.onChangeField.bind(this)}/>
                         </Form.Group>
 
 
@@ -152,8 +161,9 @@ TicketsAdd.propTypes = {
 export default createContainer(() => {
 
     const patientsHandle = Meteor.subscribe('patients');
+    const policessHandle = Meteor.subscribe('polices');
     const usrsHandle = Meteor.subscribe('allUsers');
-    const loading = !patientsHandle.ready() && !usrsHandle.ready();
+    const loading = !patientsHandle.ready() && !usrsHandle.ready() && !policessHandle.ready();
 
     return {
         Session,
@@ -170,6 +180,13 @@ export default createContainer(() => {
                 key: patient._id,
                 text: patient.nomEtPrenom,
                 value: patient._id
+            }
+        }),
+        polices : Polices.find({visible: true}).fetch().map((police)=>{
+            return {
+                key: police._id,
+                text: `${police.numeroPolice}-${police.societe}`,
+                value: police.tauxCouverture
             }
         })
     };

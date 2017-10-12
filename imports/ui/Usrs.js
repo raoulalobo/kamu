@@ -82,6 +82,10 @@ export class Usrs extends React.Component{
                                             Polices Assurances
                                         </Menu.Item>
 
+                                        <Menu.Item name='horaires' onClick={this.onChangeField.bind(this)}>
+                                            Horaires et couts
+                                        </Menu.Item>
+
                                     </Menu>
 
                                 </Grid.Column>
@@ -89,9 +93,10 @@ export class Usrs extends React.Component{
                                 <Grid.Column width={13}>
                                     <Grid.Row>
                                         <ComposantsAdmin  tag={this.state.affichage} />
+                                        <h2> </h2>
                                     </Grid.Row>
                                     <Grid.Row>
-                                        <h2>*SearchBar if needed</h2>
+                                        <h2>*Barres de recherche et/ou filtres...</h2>
                                     </Grid.Row>
                                     <Grid.Row >
                                         <h2> </h2>
