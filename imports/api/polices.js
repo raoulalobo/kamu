@@ -21,19 +21,19 @@ if ( Meteor.isServer ) {
 
                     numeroPolice: {
                         type: String,
-                        label: 'idPatient',
+                        label: 'Numero Police',
                     },
                     societe: {
                         type: String,
-                        label: 'idMedecin'
+                        label: 'Societe'
                     },
                     libelle: {
                         type: String,
-                        label: 'assure'
+                        label: 'Libelle'
                     },
                     tauxCouverture: {
                         type: Number,
-                        label: 'idSociete'
+                        label: 'Taux de couverture'
                     },
                     observations: {
                         type: String,

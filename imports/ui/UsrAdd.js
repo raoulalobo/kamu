@@ -79,8 +79,8 @@ export default class UsrAdd extends React.Component {
                     onClose={this.handleClose.bind(this)}
                     dimmer='blurring'
                     size='small'
-                    trigger={<Button onClick={this.handleOpen.bind(this)} fluid basic color='blue'>+ Ajouter un  utilisateur</Button>}>
-                    <Modal.Header>Ajouter un  utilisateur</Modal.Header>
+                    trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter 01  utilisateur</Button>}>
+                    <Modal.Header>Ajouter 01  utilisateur</Modal.Header>
                     <Modal.Content >
                         {this.state.error ?
                             <Message negative>

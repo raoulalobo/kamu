@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import UsrAdd from "./UsrAdd";
 import PolicesAdd from "./PolicesAdd";
-import DroitsAdd from "./DroitsAdd";
 
 class ComposantsAdmin extends Component {
     components = {
-        ursadd: UsrAdd,
-        policesadd: PolicesAdd,
-        droitsadd: DroitsAdd,
+        usr: UsrAdd,
+        polices: PolicesAdd
     };
     render() {
-        const TagName = this.components[this.props.tag || 'droitsadd'];
+        const TagName = this.components[this.props.tag || 'usr'];
         return <TagName />
     }
 }

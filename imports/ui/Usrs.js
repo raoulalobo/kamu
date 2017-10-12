@@ -5,10 +5,11 @@ import { Grid , Header, Icon , Label, Menu  } from 'semantic-ui-react'
 
 //import DroitsList from "./DroitsList";
 //import DroitsAdd from "./DroitsAdd";
+//import UsrsList from "./UsrsList";
 
 import MainMenu from "./MainMenu";
-import UsrsList from "./UsrsList";
 import ComposantsAdmin from "./ComposantsAdmin";
+import ComposantsList from "./ComposantsList";
 
 
 
@@ -73,24 +74,12 @@ export class Usrs extends React.Component{
 
                                     <Menu vertical>
 
-                                        <Menu.Item name='ursadd' onClick={this.onChangeField.bind(this)}>
-                                            <Label color='teal'>1</Label>
+                                        <Menu.Item name='usr' onClick={this.onChangeField.bind(this)}>
                                             Utilisateurs
                                         </Menu.Item>
 
-                                        <Menu.Item name='droitsadd' onClick={this.onChangeField.bind(this)}>
-                                            <Label>51</Label>
+                                        <Menu.Item name='polices' onClick={this.onChangeField.bind(this)}>
                                             Polices Assurances
-                                        </Menu.Item>
-
-                                        <Menu.Item name='updates' onClick={this.onChangeField.bind(this)}>
-                                            <Label>1</Label>
-                                            Chambres
-                                        </Menu.Item>
-
-                                        <Menu.Item name='updates' onClick={this.onChangeField.bind(this)}>
-                                            <Label>1</Label>
-                                            Ambulances
                                         </Menu.Item>
 
                                     </Menu>
@@ -105,8 +94,8 @@ export class Usrs extends React.Component{
                                         <h2>*SearchBar if needed</h2>
                                     </Grid.Row>
                                     <Grid.Row >
-                                        <h2></h2>
-                                        <UsrsList/>
+                                        <h2> </h2>
+                                        <ComposantsList tag={this.state.affichage}/>
                                     </Grid.Row>
                                 </Grid.Column>
 

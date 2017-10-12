@@ -26,7 +26,7 @@ export class PolicesAdd extends React.Component {
 
         if ( numeroPolice && societe && libelle && tauxCouverture && observations ) {
 
-            Meteor.call('polices.insert', numeroPolice , societe ,libelle , tauxCouverture , observations , (err, res) => {
+            Meteor.call('polices.insert', numeroPolice , societe ,libelle , parseInt( tauxCouverture.trim() ) , observations , (err, res) => {
                 if (!err) {
                     this.handleClose();
                     Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
@@ -76,9 +76,10 @@ export class PolicesAdd extends React.Component {
                 onSubmit={this.onSubmit.bind(this)}
                 open={this.state.modalOpen}
                 onClose={this.handleClose.bind(this)}
+                dimmer='blurring'
                 size='small'
-                trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter un police</Button>}>
-                <Modal.Header>Ajouter un police</Modal.Header>
+                trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter 01 police</Button>}>
+                <Modal.Header>Ajouter 01 police</Modal.Header>
                 <Modal.Content >
                     {this.state.error ?
                         <Message negative>
@@ -108,7 +109,7 @@ export class PolicesAdd extends React.Component {
                                         onChange={this.onChangeField.bind(this)}/>
 
                             <Form.Input label='Taux de couverture'
-                                        name='TauxCouverture'
+                                        name='tauxCouverture'
                                         value={this.state.tauxCouverture}
                                         onChange={this.onChangeField.bind(this)}/>
                         </Form.Group>
@@ -132,5 +133,8 @@ PolicesAdd.propTypes = {
 
 export default createContainer(() => {
 
+    return {
+        Session
+    };
 
 }, PolicesAdd );
