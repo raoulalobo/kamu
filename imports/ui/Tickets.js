@@ -3,7 +3,7 @@ import { Grid , Header, Icon  } from 'semantic-ui-react'
 
 import MainMenu from './MainMenu';
 import TicketsAdd from './TicketsAdd';
-//import TicketsList from './TicketsList';
+import TicketsList from './TicketsList';
 //import TicketsHelpBar from './TicketsHelpBar';
 
 
@@ -48,7 +48,7 @@ export default class Tickets extends React.Component{
                             <Grid.Row>
                                 <h2></h2>
                                 <div className="tableOverflow">
-                                    Liste de tickets {/*<TicketsList/>*/}
+                                    <TicketsList/>
                                 </div>
                             </Grid.Row>
 

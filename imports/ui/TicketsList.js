@@ -33,11 +33,11 @@ export class TicketsList extends React.Component{
                 <Table selectable singleLine>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>Numero_Ticket</Table.HeaderCell>
-                            <Table.HeaderCell>Societe</Table.HeaderCell>
-                            <Table.HeaderCell>Libelle</Table.HeaderCell>
-                            <Table.HeaderCell>Taux_Couverture (%)</Table.HeaderCell>
-                            <Table.HeaderCell>Observations</Table.HeaderCell>
+                            <Table.HeaderCell>Nom_Patient</Table.HeaderCell>
+                            <Table.HeaderCell>Nom_Medecin</Table.HeaderCell>
+                            <Table.HeaderCell>Police</Table.HeaderCell>
+                            <Table.HeaderCell>Tarif</Table.HeaderCell>
+                            <Table.HeaderCell>Net_a_payer</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
 
