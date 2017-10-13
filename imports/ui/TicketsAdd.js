@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { Router, Route, browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Button, Modal , Form, Message, Dropdown } from 'semantic-ui-react'
 import { Patients } from '../api/patients';
 import { Polices } from '../api/polices';
+import {Tarifs} from "../api/tarifs";
 
 export class TicketsAdd extends React.Component {
     constructor(props) {
@@ -13,21 +13,30 @@ export class TicketsAdd extends React.Component {
         this.state = {
             modalOpen: false,
             patients: '',
+            nomp:'',
             medecins: '',
-            assure: '',
-            societe: '',
+            nomm:'',
+            polices: '',
+            taux:0,
+            tarifs: '',
+            prix:0,
+            autre:'',
             observations: '',
             error: ''
         };
     }
     onSubmit(e) {
-        const { patients, medecins , assure , societe, observations } = this.state;
+        const { patients, nomp, medecins, nomm , polices , taux, tarifs, prix, observations } = this.state;
 
         e.preventDefault();
 
-        if ( patients && medecins && assure && societe && observations ) {
+        if ( patients && medecins && polices && tarifs && observations ) {
 
-            Meteor.call('tickets.insert', patients , medecins ,assure , societe , observations , (err, res) => {
+            const montant = prix *(taux/100) ;
+
+            //console.log( `${patients} , ${nomp} , ${medecins} , ${nomm}  , ${polices} , ${tarifs} , ${montant} ` )
+            console.log( typeof montant,montant );
+            Meteor.call('tickets.insert', patients , nomp , medecins, nomm ,polices , tarifs ,parseInt(montant) , observations , (err, res) => {
                 if (!err) {
                     this.handleClose();
                     Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
@@ -44,9 +53,14 @@ export class TicketsAdd extends React.Component {
         this.setState({
             modalOpen: false,
             patients: '',
+            nomp:'',
             medecins: '',
-            assure: '',
-            societe: '',
+            nomm:'',
+            polices: '',
+            taux:0,
+            tarifs: '',
+            prix:0,
+            autre:'',
             observations: '',
             error: ''
         });
@@ -54,9 +68,12 @@ export class TicketsAdd extends React.Component {
     handleOpen() {
         this.setState( { modalOpen: true } );
     }
-    onChangeField(e, { name,value }) {
-        this.setState( { [name] : value });
-        console.log(`${name} -> ${value}`)
+    onChangeField(e, { name,id,value }) {
+        this.setState( { [name] : value.split("+",2)[0] });
+        this.setState( { [id] : parseInt( value.split("+",2)[1] ) || value.split("+",2)[1]  });
+        //console.log(`${name} -> ${value.split("+",2)[0]} et ${id} -> ${value.split("+",2)[1]}`);
+        //console.log(`${this.state.taux} -> ${this.state.prix}`);
+
     }
     componentWillReceiveProps(nextProps) {
 
@@ -73,11 +90,7 @@ export class TicketsAdd extends React.Component {
         const optionsPatients = this.props.patients;
         const optionsUsers = this.props.usrs;
         const optionsPolices = this.props.polices;
-        const optionsAssurances = [
-            { key: 'OUI', text: 'Nuits', value: 'OUI' },
-            { key: 'NON', text: 'Jours', value: 'NON' },
-            { key: 'MAYBE', text: 'Feries', value: 'NON' },
-        ];
+        const optionsTarifs = this.props.tarifs;
         return (
 
             <Modal
@@ -102,6 +115,7 @@ export class TicketsAdd extends React.Component {
                                         label='Patients'
                                         minCharacters={0}
                                         name='patients'
+                                        id='nomp'
                                         placeholder='Selectionnez 01 patient'
                                         search
                                         selection
@@ -111,6 +125,7 @@ export class TicketsAdd extends React.Component {
                                 label='Medecins'
                                 minCharacters={0}
                                 name='medecins'
+                                id='nomm'
                                 placeholder='Selectionnez 01 medecin'
                                 search
                                 selection
@@ -124,6 +139,7 @@ export class TicketsAdd extends React.Component {
                                 label='Polices'
                                 minCharacters={0}
                                 name='polices'
+                                id='taux'
                                 placeholder='Selectionnez ...'
                                 search
                                 selection
@@ -134,16 +150,18 @@ export class TicketsAdd extends React.Component {
                                 label='Tarifs'
                                 minCharacters={0}
                                 name='tarifs'
+                                id='prix'
                                 placeholder='Selectionnez ...'
                                 search
                                 selection
-                                options={optionsAssurances}
+                                options={optionsTarifs}
                                 onChange={this.onChangeField.bind(this)}/>
                         </Form.Group>
 
 
                         <Form.TextArea label='Observations'
                                        name='observations'
+                                       id='autre'
                                        value={this.state.observations}
                                        onChange={this.onChangeField.bind(this)}/>
                         <Form.Button fluid basic color='blue'>Ajouter et creer un ticket</Form.Button>
@@ -163,7 +181,8 @@ export default createContainer(() => {
     const patientsHandle = Meteor.subscribe('patients');
     const policessHandle = Meteor.subscribe('polices');
     const usrsHandle = Meteor.subscribe('allUsers');
-    const loading = !patientsHandle.ready() && !usrsHandle.ready() && !policessHandle.ready();
+    const tarifsHandle = Meteor.subscribe('tarifs');
+    const loading = !patientsHandle.ready() && !usrsHandle.ready() && !policessHandle.ready() && !tarifsHandle.ready();
 
     return {
         Session,
@@ -172,21 +191,28 @@ export default createContainer(() => {
             return {
                 key: usr._id,
                 text: usr.emails[0].address,
-                value: usr._id
+                value: [usr._id,usr.emails[0].address].join("+")
             }
         }),
         patients : Patients.find({visible: true}).fetch().map((patient)=>{
             return {
                 key: patient._id,
                 text: patient.nomEtPrenom,
-                value: patient._id
+                value: [patient._id,patient.nomEtPrenom].join("+")
             }
         }),
         polices : Polices.find({visible: true}).fetch().map((police)=>{
             return {
                 key: police._id,
                 text: `${police.numeroPolice}-${police.societe}`,
-                value: police.tauxCouverture
+                value: [`${police.numeroPolice}-${police.societe}`,police.tauxCouverture].join("+")
+            }
+        }),
+        tarifs : Tarifs.find({visible: true}).fetch().map((tarifs)=>{
+            return {
+                key: tarifs._id,
+                text: tarifs.libelle,
+                value: [tarifs.libelle,tarifs.montant].join("+")
             }
         })
     };

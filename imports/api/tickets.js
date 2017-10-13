@@ -11,7 +11,7 @@ if ( Meteor.isServer ) {
     });
 
     Meteor.methods({
-        'tickets.insert'(  idPatient , idMedecin , assure, idSociete, observations  ){
+        'tickets.insert'(  idPatient , nomPatient, idMedecin , nomMedecin, polices, tarifs, montant, observations  ){
             if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
@@ -23,23 +23,35 @@ if ( Meteor.isServer ) {
                         type: String,
                         label: 'idPatient',
                     },
+                    nomPatient: {
+                        type: String,
+                        label: 'idPatient',
+                    },
                     idMedecin: {
                         type: String,
                         label: 'idMedecin'
                     },
-                    assure: {
+                    nomMedecin: {
+                        type: String,
+                        label: 'idMedecin'
+                    },
+                    polices: {
                         type: String,
                         label: 'assure'
                     },
-                    idSociete: {
+                    tarifs: {
                         type: String,
                         label: 'idSociete'
+                    },
+                    montant: {
+                        type: Number,
+                        label: 'Montant'
                     },
                     observations: {
                         type: String,
                         label: 'Observations'
                     }
-                }).validate({ idPatient , idMedecin , assure, idSociete, observations });
+                }).validate({ idPatient , nomPatient, idMedecin , nomMedecin , polices, tarifs, montant, observations });
             } catch (e) {
                 throw new Meteor.Error(400, e.message);
             }
@@ -47,15 +59,18 @@ if ( Meteor.isServer ) {
             return Tickets.insert({
 
                 idPatient ,
+                nomPatient,
                 idMedecin ,
-                assure,
-                idSociete,
+                nomMedecin,
+                polices,
+                tarifs,
+                montant,
                 observations,
                 creeLe: this.userId,
                 creePar : new Date().getTime(),
                 visible: true,
             } , (err,id)=>{ if (!err)
-            { console.log(`Tickets : id ${id} et nom : ${nomEtPrenom}`)}
+            { console.log(`Tickets : id ${idPatient} et nom : ${montant}`)}
 
             });
         },

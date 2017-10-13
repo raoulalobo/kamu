@@ -1,11 +1,7 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Grid , Header, Icon , Label, Menu  } from 'semantic-ui-react'
+import { Grid , Header, Icon , Menu  } from 'semantic-ui-react'
 
-
-//import DroitsList from "./DroitsList";
-//import DroitsAdd from "./DroitsAdd";
-//import UsrsList from "./UsrsList";
 
 import MainMenu from "./MainMenu";
 import ComposantsAdmin from "./ComposantsAdmin";
@@ -82,7 +78,7 @@ export class Usrs extends React.Component{
                                             Polices Assurances
                                         </Menu.Item>
 
-                                        <Menu.Item name='horaires' onClick={this.onChangeField.bind(this)}>
+                                        <Menu.Item name='tarifs' onClick={this.onChangeField.bind(this)}>
                                             Horaires et couts
                                         </Menu.Item>
 
