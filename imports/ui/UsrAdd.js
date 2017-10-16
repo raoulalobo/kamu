@@ -11,17 +11,18 @@ export default class UsrAdd extends React.Component {
             username: '',
             email: '',
             password: '',
-            telephone: ''
+            telephone: '',
+            specialites:'',
         };
     }
     onSubmit(e) {
-        const { username ,email , password, telephone } = this.state;
+        const { username ,email , password, telephone, specialites } = this.state;
 
         e.preventDefault();
 
-        if ( username && email && password && telephone ) {
+        if ( username && email && password && telephone && specialites ) {
 
-            Meteor.call('create.user', username.trim() ,email.trim() , password.trim(), { telephone : telephone.trim() } , (err) => {
+            Meteor.call('create.user', username.trim() ,email.trim() , password.trim(), { telephone : telephone.trim(),specialites },  specialites  , (err) => {
                 if (!err) {
                     this.handleClose();
                     Meteor.setTimeout(
@@ -55,6 +56,10 @@ export default class UsrAdd extends React.Component {
             password: e.target.value
         });
     }
+    onChangeField(e, { name,value }) {
+        this.setState( { [name] : value });
+        console.log( `${name} -> ${value}`)
+    }
     handleClose() {
         this.setState({
             modalOpen: false,
@@ -63,13 +68,20 @@ export default class UsrAdd extends React.Component {
             email: '',
             password: '',
             telephone: '',
+            specialites: '',
         });
     }
     handleOpen() {
         this.setState( { modalOpen: true } );
     }
     render() {
-
+        const optionsSpecialites = [
+            {key:'manager',text:'administration-manager',value:'MANAGER'},
+            {key:'caisse',text:'administration-caisse',value:'CAISSE'},
+            {key:'generaliste',text:'medecin-generaliste',value:'GENERALISTE'},
+            {key:'pediatre',text:'medecin-pediatre',value:'PEDIATRE'},
+            {key:'infirmier',text:'infirmier',value:'INFIRMIER'},
+        ];
         return (
             <div className="mrgnButton">
 
@@ -99,6 +111,17 @@ export default class UsrAdd extends React.Component {
                             <Form.Group widths='equal'>
                                 <Form.Input label='Email ...' value={this.state.email}
                                             onChange={this.onChangeEmail.bind(this)}/>
+                                <Form.Dropdown
+                                    label='Specialites'
+                                    minCharacters={0}
+                                    name='specialites'
+                                    placeholder='Selectionnez 01 specialite'
+                                    search
+                                    selection
+                                    options={optionsSpecialites}
+                                    onChange={this.onChangeField.bind(this)}/>
+                            </Form.Group>
+                            <Form.Group widths='equal'>
                                 <Form.Input type="password" label='Mot de passe ...' value={this.state.password}
                                             onChange={this.onChangePassword.bind(this)}/>
                             </Form.Group>

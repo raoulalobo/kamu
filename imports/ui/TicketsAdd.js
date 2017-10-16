@@ -190,8 +190,8 @@ export default createContainer(() => {
         usrs: Meteor.users.find({roles:"medecin"}).fetch().map((usr)=>{
             return {
                 key: usr._id,
-                text: usr.emails[0].address,
-                value: [usr._id,usr.emails[0].address].join("+")
+                text: `${usr.emails[0].address}-${usr.profile.specialites}`,
+                value: [usr._id,`${usr.emails[0].address}-${usr.profile.specialites}`].join("+")
             }
         }),
         patients : Patients.find({visible: true}).fetch().map((patient)=>{
