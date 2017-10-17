@@ -150,19 +150,7 @@ export default class PatientsAdd extends React.Component {
                                         value={this.state.tel}
                                         onChange={this.onChangeField.bind(this)}/>
                         </Form.Group>
-
-                        <Form.Group widths='equal'>
-
-                            <Form.Select label='Contact 3'
-                                         name='genre'
-                                         options={options}
-                                         placeholder='Genre'
-                                         onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='Telephone Contact 3'
-                                        name='tel'
-                                        value={this.state.tel}
-                                        onChange={this.onChangeField.bind(this)}/>
-                        </Form.Group>
+                        
 
                         <Form.TextArea label='Observations'
                                        name='observations'

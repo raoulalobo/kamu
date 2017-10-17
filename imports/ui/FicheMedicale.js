@@ -2,6 +2,7 @@ import React, { Component }  from 'react';
 import { Grid , Header, Icon , Input, Label, Menu } from 'semantic-ui-react'
 
 import MainMenu from './MainMenu';
+import FicheMedicalAdd from './FicheMedicalAdd';
 
 
 export default class FicheMedicales extends React.Component{
@@ -37,29 +38,26 @@ export default class FicheMedicales extends React.Component{
                                 <Menu vertical>
 
                                     <Menu.Item name='inbox'>
-                                        <Label color='teal'>1</Label>
                                         Fiches
                                     </Menu.Item>
 
                                     <Menu.Item name='spam'>
-                                        <Label>51</Label>
-                                        Ordonnances
-                                    </Menu.Item>
-
-                                    <Menu.Item name='updates'>
-                                        <Label>1</Label>
                                         Soins
                                     </Menu.Item>
 
-                                    <Menu.Item>
-                                        <Input icon='search' placeholder='Search mail...' />
+                                    <Menu.Item name='updates'>
+                                        Evasan
+                                    </Menu.Item>
+
+                                    <Menu.Item name='updates'>
+                                        Autres menus ...
                                     </Menu.Item>
 
                                 </Menu>
                             </Grid.Column>
                             <Grid.Column width={13}>
                                 <Grid.Row>
-                                    Rechercher un ficheMedicale {/*<DepartSearch/>*/}
+                                    <FicheMedicalAdd/>
                                 </Grid.Row>
 
                                 <h2></h2>

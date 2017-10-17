@@ -30,21 +30,22 @@ export const globalOnEnter = (nextState) => {
     const lastRoute = nextState.routes[nextState.routes.length - 1];
     //console.log(nextState);
     Session.set('currentPagePrivacy', lastRoute.privacy);
-    Session.set('permissionRole', lastRoute.nomane);
+    //Session.set('permissionRole', lastRoute.nomane);
 };
 
 const rls_0 = ['admin'];
-const rls_1 = ['admin','caisse'];
-const rls_2 = ['admin','medecin','colis'];
+const rls_1 = ['admin','infirmier'];
+const rls_2 = ['admin','medecin','infirmier'];
 
 const onEnterRolePage = (nextState) => {
     //console.log(nextState);
-    const lastRoute = nextState.routes[nextState.routes.length - 1];
+
+/*    const lastRoute = nextState.routes[nextState.routes.length - 1];
     Session.set('permissionRole', lastRoute.nomane);
     const permissionRole = Session.get('permissionRole');
     if ( !Roles.userIsInRole(Meteor.userId(), permissionRole ) ) {
-        browserHistory.replace('/NotFound');
-    }
+        browserHistory.replace('/homepage');
+    }*/
 };
 
 export const routes = (
@@ -57,10 +58,6 @@ export const routes = (
             <Route path="/patients" component={Patients} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage} />
             <Route path="/tickets" component={Tickets} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage} />
             <Route path="/fiches-medicales" component={FicheMedicale} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage} />
-            {/*<Route path="/departs" component={Departs} privacy="auth" nomane={rls_1} onEnter={onEnterRolePage}/>*/}
-            {/*<Route path="/depenses" component={Depenses} privacy="auth" nomane={rls_1} onEnter={onEnterRolePage}/>*/}
-            {/*<Route path="/colis" component={Colis} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage}/>*/}
-            {/*<Route path="/resas" component={Resa} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage}/>*/}
             <Route path="/" component={Login} privacy="unauth" nomane="joedoe5"/>
             <Route path="*" component={NotFound}/>
         </Route>

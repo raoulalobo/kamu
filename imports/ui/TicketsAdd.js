@@ -32,7 +32,7 @@ export class TicketsAdd extends React.Component {
 
         if ( patients && medecins && polices && tarifs && observations ) {
 
-            const montant = prix *(taux/100) ;
+            const montant = prix - ( prix *(taux/100) ) ;
 
             //console.log( `${patients} , ${nomp} , ${medecins} , ${nomm}  , ${polices} , ${tarifs} , ${montant} ` )
             console.log( typeof montant,montant );
@@ -132,6 +132,20 @@ export class TicketsAdd extends React.Component {
                                 options={optionsUsers}
                                 onChange={this.onChangeField.bind(this)}/>
 
+                        </Form.Group>
+                        <Form.Group widths='equal'>
+                            <Form.Input label='Entreprise (Non assures)'
+                                        name='entreprise'/>
+                            <Form.Input label='Profession (Non assures)'
+                                        name='profession'/>
+                        </Form.Group>
+
+                        <Form.Group widths='equal'>
+                            <Form.Input label='Code Assure'
+                                        name='code'/>
+                            <Form.Input label='Nom Assure'
+                                        name='code'
+                                        id='noma'/>
                         </Form.Group>
 
                         <Form.Group widths='equal'>

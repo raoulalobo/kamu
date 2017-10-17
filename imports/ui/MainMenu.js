@@ -142,7 +142,7 @@ export class MainMenu extends Component {
 
                 </Grid.Row>
             )
-        } else if ( Roles.userIsInRole(this.state.currentUser, 'medecin') ) {
+        } else if ( Roles.userIsInRole(this.state.currentUser, 'infirmier') ) {
 
             const { activeItem } = this.props;
             return (
@@ -151,57 +151,41 @@ export class MainMenu extends Component {
 
                     <Menu.Item
                         as={Link}
-                        to='/patients'
-                        name='patients'
-                        active={activeItem === '/patients'}>
-                        <Icon name='users' />
-                        Patients
-                    </Menu.Item>
-
-                    <Menu.Item
-                        as={Link}
-                        to='/'
+                        to='/tickets'
                         name='tickets'
                         active={activeItem === '/tickets'}>
-                        <Icon name='treatment' />
+                        <Icon name='ticket' />
                         Tickets
                     </Menu.Item>
 
+                    <Menu.Item
+                        as={Link}
+                        to='/fiches-medicales'
+                        name='suiviMedical'
+                        active={activeItem === '/fiches-medicales'}>
+                        <Icon name='treatment' />
+                        Suivi Medical
+                    </Menu.Item>
+
                 </Grid.Row>
             )
-        } else if ( Roles.userIsInRole(this.state.currentUser, 'pharmacie') ) {
+        } else if ( Roles.userIsInRole(this.state.currentUser, 'medecin') ) {
             const { activeItem } = this.props;
             return (
                 <Grid.Row only='mobile tablet computer'>
 
                     <Menu.Item
                         as={Link}
-                        to='/'
-                        name='pharmacie'
-                        active={activeItem === '/pharmacie'}>
-                        <Icon name='first aid' />
-                        Pharmacie
+                        to='/fiches-medicales'
+                        name='suiviMedical'
+                        active={activeItem === '/fiches-medicales'}>
+                        <Icon name='treatment' />
+                        Suivi Medical
                     </Menu.Item>
 
                 </Grid.Row>
 
 
-            )
-        } else if ( Roles.addUsersToRoles(this.state.currentUser, 'caisse') ){
-            const { activeItem } = this.props ;
-            return (
-                <Grid.Row only='mobile tablet computer'>
-
-                    <Menu.Item
-                        as={Link}
-                        to='/'
-                        name='caisse'
-                        active={activeItem === '/caisse'}>
-                        <Icon name='shop' />
-                        Caisse
-                    </Menu.Item>
-
-                </Grid.Row>
             )
         }
     }

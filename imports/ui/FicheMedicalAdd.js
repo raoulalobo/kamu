@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import Flatpickr from 'react-flatpickr';
-import {fr} from 'flatpickr/dist/l10n/fr.js';
-import { Router, Route, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Button, Modal , Form, Message, Dropdown } from 'semantic-ui-react'
 import { Patients } from '../api/patients';
@@ -31,6 +29,7 @@ export class FicheMedicalesAdd extends React.Component {
             surveillance: '',
             rendez_vous: '',
             observations: '',
+            currentUser : Meteor.user(),
             error: ''
         };
     }
@@ -90,13 +89,64 @@ export class FicheMedicalesAdd extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
 
-        const { patients } = nextProps;
-        console.log(this.props)
-        console.log(nextProps)
+        const { patient,user } = nextProps;
+        if (user) {
+            this.props.Session.set('userId', user._id);
+            this.setState({currentUser: user._id});
+        }
+        //console.log(this.props)
+        //console.log(nextProps)
 
+    }
+    componentWillReceiveProps(nextProps) {
+        const { user } = nextProps;
+        if (user) {
+            this.props.Session.set('userId', user._id);
+            this.setState({currentUser: user._id});
+        }
+        //console.log(nextProps);
+        //console.log(this.props);
     }
     componentWillUnmount() {
         Meteor.subscribe('patients').stop()
+    }
+    infirmierEtMedecin(){
+        return(
+
+                <Form.TextArea label='Ordonnance / Traitement '
+                               name='ordonnance_traitement'
+                               readOnly={Roles.userIsInRole(this.state.currentUser, ['infirmier','admin'])}
+                               value={this.state.ordonnance_traitement}
+                               onChange={this.onChangeField.bind(this)}/>
+
+            )
+    }
+    medecinForm(){
+        if ( Roles.userIsInRole(this.state.currentUser, ['medecin','admin']) ) {
+            return(
+                <div>
+                    <Form.TextArea label='Diagnostique'
+                                   name='diagnostique'
+                                   value={this.state.diagnostique}
+                                   onChange={this.onChangeField.bind(this)}/>
+
+                    <Form.TextArea label='Surveillance'
+                                   name='surveillance'
+                                   value={this.state.surveillance}
+                                   onChange={this.onChangeField.bind(this)}/>
+
+                    <Form.TextArea label='Rendez-vous'
+                                   name='rendez_vous'
+                                   value={this.state.rendez_vous}
+                                   onChange={this.onChangeField.bind(this)}/>
+
+                    <Form.TextArea label='Observations'
+                                   name='observations'
+                                   value={this.state.observations}
+                                   onChange={this.onChangeField.bind(this)}/>
+                </div>
+            )
+        }
     }
     render() {
         const optionsPatients = this.props.patients;
@@ -119,123 +169,85 @@ export class FicheMedicalesAdd extends React.Component {
                         :
                         undefined}
                     <Form>
-
-                        <Form.Group widths='equal'>
-                            <Form.Dropdown
-                                label='Patients'
-                                minCharacters={0}
-                                name='patients'
-                                placeholder='Selectionnez 01 patient'
-                                search
-                                selection
-                                options={optionsPatients}
-                                onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='Assurance'
-                                        name='assurance'
-                                        value={this.state.tel}
-                                        onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='Societe'
-                                        name='societe'
-                                        value={this.state.tel}
-                                        onChange={this.onChangeField.bind(this)}/>
-                        </Form.Group>
-
-                        <Form.Group widths='equal'>
-                            <Form.Dropdown
-                                label='Medecins'
-                                minCharacters={0}
-                                name='medecins'
-                                placeholder='Selectionnez 01 medecin'
-                                search
-                                selection
-                                options={optionsUsers}
-                                onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='Telephone'
-                                        name='tel'
-                                        value={this.state.tel}
-                                        onChange={this.onChangeField.bind(this)}/>
-                        </Form.Group>
-
-                        <Form.Group widths='equal'>
-
-                            <Form.Input label='Poids'
-                                        name='poids'
-                                        value={this.state.poids}
-                                        onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='Temp.'
-                                        name='temperature'
-                                        value={this.state.temperature}
-                                        onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='Pi'
-                                        name='pie'
-                                        value={this.state.pie}
-                                        onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='FC'
-                                        name='fc'
-                                        value={this.state.fc}
-                                        onChange={this.onChangeField.bind(this)}/>
-                        </Form.Group>
-
-                        <Form.Group widths='equal'>
-
-                            <Form.Input label='T.A'
-                                        name='ta'
-                                        value={this.state.ta}
-                                        onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='Glycemie'
-                                        name='glycemie'
-                                        value={this.state.glycemie}
-                                        onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='FR'
-                                        name='fre'
-                                        value={this.state.fre}
-                                        onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='SPo2'
-                                        name='spo2'
-                                        value={this.state.spo2}
-                                        onChange={this.onChangeField.bind(this)}/>
-                        </Form.Group>
-
-                        <Form.TextArea label='Motifs de consultations'
-                                       name='motifs_consulation'
-                                       value={this.state.motifs_consulation}
-                                       onChange={this.onChangeField.bind(this)}/>
-
-                        <Form.TextArea label='Histoire de la maladie'
-                                       name='histoire_maladie'
-                                       value={this.state.histoire_maladie}
-                                       onChange={this.onChangeField.bind(this)}/>
+                        <div>
+                            <Form.Group widths='equal'>
+                                <Form.Dropdown
+                                    label='Ticket Id'
+                                    minCharacters={0}
+                                    name='patients'
+                                    placeholder='Selectionnez 01 patient'
+                                    search
+                                    selection
+                                    options={optionsPatients}
+                                    onChange={this.onChangeField.bind(this)}/>
+                            </Form.Group>
 
 
-                        <Form.TextArea label='Antecedents'
-                                       name='antecedents'
-                                       value={this.state.antecedents}
-                                       onChange={this.onChangeField.bind(this)}/>
+                            <Form.Group widths='equal'>
 
-                        <Form.TextArea label='Diagnostique'
-                                       name='diagnostique'
-                                       value={this.state.diagnostique}
-                                       onChange={this.onChangeField.bind(this)}/>
+                                <Form.Input label='Poids'
+                                            name='poids'
+                                            value={this.state.poids}
+                                            onChange={this.onChangeField.bind(this)}/>
+                                <Form.Input label='Temp.'
+                                            name='temperature'
+                                            value={this.state.temperature}
+                                            onChange={this.onChangeField.bind(this)}/>
+                                <Form.Input label='Pi'
+                                            name='pie'
+                                            value={this.state.pie}
+                                            onChange={this.onChangeField.bind(this)}/>
+                                <Form.Input label='FC'
+                                            name='fc'
+                                            value={this.state.fc}
+                                            onChange={this.onChangeField.bind(this)}/>
+                            </Form.Group>
 
-                        <Form.TextArea label='Ordonnance / Traitement '
-                                       name='ordonnance_traitement'
-                                       value={this.state.ordonnance_traitement}
-                                       onChange={this.onChangeField.bind(this)}/>
+                            <Form.Group widths='equal'>
 
-                        <Form.TextArea label='Surveillance'
-                                       name='surveillance'
-                                       value={this.state.surveillance}
-                                       onChange={this.onChangeField.bind(this)}/>
+                                <Form.Input label='T.A'
+                                            name='ta'
+                                            value={this.state.ta}
+                                            onChange={this.onChangeField.bind(this)}/>
+                                <Form.Input label='Glycemie'
+                                            name='glycemie'
+                                            value={this.state.glycemie}
+                                            onChange={this.onChangeField.bind(this)}/>
+                                <Form.Input label='FR'
+                                            name='fre'
+                                            value={this.state.fre}
+                                            onChange={this.onChangeField.bind(this)}/>
+                                <Form.Input label='SPo2'
+                                            name='spo2'
+                                            value={this.state.spo2}
+                                            onChange={this.onChangeField.bind(this)}/>
+                            </Form.Group>
 
-                        <Form.TextArea label='Rendez-vous'
-                                       name='rendez_vous'
-                                       value={this.state.rendez_vous}
-                                       onChange={this.onChangeField.bind(this)}/>
+                            <Form.TextArea label='Motifs de consultations'
+                                           name='motifs_consulation'
+                                           value={this.state.motifs_consulation}
+                                           onChange={this.onChangeField.bind(this)}/>
 
-                        <Form.TextArea label='Observations'
-                                       name='observations'
-                                       value={this.state.observations}
-                                       onChange={this.onChangeField.bind(this)}/>
+                            <Form.TextArea label='Histoire de la maladie'
+                                           name='histoire_maladie'
+                                           value={this.state.histoire_maladie}
+                                           onChange={this.onChangeField.bind(this)}/>
+
+
+                            <Form.TextArea label='Antecedents Personnels'
+                                           name='antecedents'
+                                           value={this.state.antecedents}
+                                           onChange={this.onChangeField.bind(this)}/>
+
+                            <Form.TextArea label='Antecedents Familiaux'
+                                           name='antecedents'
+                                           value={this.state.antecedents}
+                                           onChange={this.onChangeField.bind(this)}/>
+                        </div>
+                        {this.medecinForm()}
+                        {this.infirmierEtMedecin()}
+
+
                         <Form.Button fluid basic color='blue'>Ajouter et creer un ficheMedicale</Form.Button>
                     </Form>
                 </Modal.Content>
@@ -252,11 +264,13 @@ export default createContainer(() => {
 
     const patientsHandle = Meteor.subscribe('patients');
     const usrsHandle = Meteor.subscribe('allUsers');
+    const user = Meteor.user() || undefined ;
     const loading = !patientsHandle.ready() && !usrsHandle.ready();
 
     return {
         Session,
         loading,
+        user,
         usrs: Meteor.users.find({roles:"medecin"}).fetch().map((usr)=>{
             return {
                 key: usr._id,
