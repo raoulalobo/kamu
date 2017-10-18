@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import UsrsList from "./UsrsList";
 import PolicesList from "./PolicesList";
-import PatientsList from "./PatientsList";
+import StocksList from "./StocksList";
 import TarifsList from "./TarifsList";
 
 class ComposantsList extends Component {
@@ -9,6 +9,7 @@ class ComposantsList extends Component {
         usr: UsrsList,
         polices: PolicesList,
         tarifs: TarifsList,
+        stocks: StocksList,
     };
     render() {
         const TagName = this.components[this.props.tag || 'usr'];

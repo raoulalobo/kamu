@@ -150,7 +150,7 @@ export default class PatientsAdd extends React.Component {
                                         value={this.state.tel}
                                         onChange={this.onChangeField.bind(this)}/>
                         </Form.Group>
-                        
+
 
                         <Form.TextArea label='Observations'
                                        name='observations'

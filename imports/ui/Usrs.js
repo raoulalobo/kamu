@@ -65,9 +65,6 @@ export class Usrs extends React.Component{
 
                                 <Grid.Column width={3}>
 
-                                    {/*<DroitsAdd/>*/}
-                                    {/*<DroitsList/>*/}
-
                                     <Menu vertical>
 
                                         <Menu.Item name='usr' onClick={this.onChangeField.bind(this)}>
@@ -80,6 +77,10 @@ export class Usrs extends React.Component{
 
                                         <Menu.Item name='tarifs' onClick={this.onChangeField.bind(this)}>
                                             Horaires et couts
+                                        </Menu.Item>
+
+                                        <Menu.Item name='stocks' onClick={this.onChangeField.bind(this)}>
+                                            Stocks et magasin
                                         </Menu.Item>
 
                                     </Menu>
