@@ -36,7 +36,7 @@ export class TicketsList extends React.Component{
                             <Table.HeaderCell>Nom_Patient</Table.HeaderCell>
                             <Table.HeaderCell>Nom_Medecin</Table.HeaderCell>
                             <Table.HeaderCell>Police</Table.HeaderCell>
-                            <Table.HeaderCell>Tarif</Table.HeaderCell>
+                            <Table.HeaderCell>Prestations</Table.HeaderCell>
                             <Table.HeaderCell>Net_a_payer</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>

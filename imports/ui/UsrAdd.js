@@ -11,26 +11,35 @@ export default class UsrAdd extends React.Component {
             username: '',
             email: '',
             password: '',
+            confirmPassword: '',
             telephone: '',
             specialites:'',
         };
     }
     onSubmit(e) {
-        const { username ,email , password, telephone, specialites } = this.state;
+        const { username ,email , password, telephone, specialites, confirmPassword } = this.state;
 
         e.preventDefault();
 
-        if ( username && email && password && telephone && specialites ) {
+        if ( username && email && password && telephone && specialites && confirmPassword ) {
 
-            Meteor.call('create.user', username.trim() ,email.trim() , password.trim(), { telephone : telephone.trim(),specialites },  specialites  , (err) => {
-                if (!err) {
-                    this.handleClose();
-                    Meteor.setTimeout(
-                        ()=> Bert.alert( 'Utilisateur ajoute avec succes.', 'danger', 'growl-top-right', 'fa-check'  ), 600*3 )
-                } else {
-                    this.setState({ error: err.reason });
-                }
-            });
+            if ( password === confirmPassword ) {
+
+                Meteor.call('create.user', username.trim() ,email.trim() , password.trim(), { telephone : telephone.trim(),specialites },  specialites  , (err) => {
+                    if (!err) {
+                        this.handleClose();
+                        Meteor.setTimeout(
+                            ()=> Bert.alert( 'Utilisateur ajoute avec succes.', 'danger', 'growl-top-right', 'fa-check'  ), 600*3 )
+                    } else {
+                        this.setState({ error: err.reason });
+                    }
+                });
+
+            } else {
+                this.setState({ error: 'Mot de passe differents' });
+            }
+
+
 
         } else {
             this.setState({ error: 'All field are required' });
@@ -56,6 +65,11 @@ export default class UsrAdd extends React.Component {
             password: e.target.value
         });
     }
+    onChangeConfirmPassword(e) {
+        this.setState({
+            confirmPassword: e.target.value
+        });
+    }
     onChangeField(e, { name,value }) {
         this.setState( { [name] : value });
         console.log( `${name} -> ${value}`)
@@ -67,6 +81,7 @@ export default class UsrAdd extends React.Component {
             username: '',
             email: '',
             password: '',
+            confirmPassword: '',
             telephone: '',
             specialites: '',
         });
@@ -86,12 +101,13 @@ export default class UsrAdd extends React.Component {
             <div className="mrgnButton">
 
                 <Modal
+                    closeOnRootNodeClick={false}
                     onSubmit={this.onSubmit.bind(this)}
                     open={this.state.modalOpen}
                     onClose={this.handleClose.bind(this)}
                     dimmer='blurring'
                     size='small'
-                    trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter 01  utilisateur</Button>}>
+                    trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter 01  utilisateur</Button>} closeIcon>
                     <Modal.Header>Ajouter 01  utilisateur</Modal.Header>
                     <Modal.Content >
                         {this.state.error ?
@@ -124,6 +140,8 @@ export default class UsrAdd extends React.Component {
                             <Form.Group widths='equal'>
                                 <Form.Input type="password" label='Mot de passe ...' value={this.state.password}
                                             onChange={this.onChangePassword.bind(this)}/>
+                                <Form.Input type="password" label='Confirmer le mot de passe ...' value={this.state.confirmPassword}
+                                            onChange={this.onChangeConfirmPassword.bind(this)}/>
                             </Form.Group>
                             <Form.Button fluid basic color='blue'>Enregistrer</Form.Button>
                         </Form>

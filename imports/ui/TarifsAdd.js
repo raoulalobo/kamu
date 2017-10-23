@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Button, Modal , Form, Message } from 'semantic-ui-react'
+import { Button, Modal , Checkbox , Form, Message } from 'semantic-ui-react'
 
 export class TarifsAdd extends React.Component {
     constructor(props) {

@@ -14,24 +14,28 @@ export default class PatientsAdd extends React.Component {
             dateNaissance: '' ,
             tel:'',
             genre:'',
+            nomContact_1:'',
+            telContact_1:'',
+            nomContact_2:'',
+            telContact_2:'',
             observations: '',
             error: ''
         };
     }
     onSubmit(e) {
-        const { dateNaissance, nomEtPrenom , tel, observations, genre } = this.state;
+        const { dateNaissance, nomEtPrenom , tel, observations, genre, nomContact_1 , telContact_1 , nomContact_2 , telContact_2 } = this.state;
 
         e.preventDefault();
 
-        if ( dateNaissance && nomEtPrenom && tel && observations && genre  ) {
+        if ( dateNaissance && nomEtPrenom && tel && observations && genre && nomContact_1 && telContact_1 && nomContact_2 && telContact_2 ) {
 
             const identifiant = new Date().getTime()+nomEtPrenom.trim().toLowerCase().replace(/[ ]/g, "_").replace(/[']/g, "+");
             console.log( identifiant ) ;
-            Meteor.call('patients.insert', dateNaissance , nomEtPrenom.trim().toLowerCase() ,tel.trim().toLowerCase() , genre, observations.trim().toLowerCase()  , (err, res) => {
+            Meteor.call('patients.insert', dateNaissance , nomEtPrenom.trim().toLowerCase() ,tel.trim().toLowerCase() , genre, nomContact_1.trim().toLowerCase() , telContact_1.trim().toLowerCase() , nomContact_2.trim().toLowerCase() , telContact_2.trim().toLowerCase() , observations.trim().toLowerCase()  , (err, res) => {
                 if (!err) {
                     this.handleClose();
                     Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
-                    browserHistory.replace('/tickets');
+                    // browserHistory.replace('/tickets');
                 } else {
                     this.setState({ error: err.reason });
                 }
@@ -48,6 +52,10 @@ export default class PatientsAdd extends React.Component {
             dateNaissance: '' ,
             tel:'',
             genre:'',
+            nomContact_1:'',
+            telContact_1:'',
+            nomContact_2:'',
+            telContact_2:'',
             observations: '',
             error: ''
         });
@@ -127,27 +135,25 @@ export default class PatientsAdd extends React.Component {
 
                         <Form.Group widths='equal'>
 
-                            <Form.Select label='Contact 1'
-                                         name='genre'
-                                         options={options}
-                                         placeholder='Genre'
+                            <Form.Input label='Nom Contact 1'
+                                         name='nomContact_1'
+                                         value={this.state.nomContact_1}
                                          onChange={this.onChangeField.bind(this)}/>
                             <Form.Input label='Telephone Contact 1'
-                                        name='tel'
-                                        value={this.state.tel}
+                                        name='telContact_1'
+                                        value={this.state.telContact_1}
                                         onChange={this.onChangeField.bind(this)}/>
                         </Form.Group>
 
                         <Form.Group widths='equal'>
 
-                            <Form.Select label='Contact 2'
-                                         name='genre'
-                                         options={options}
-                                         placeholder='Genre'
+                            <Form.Input label='Contact 2'
+                                         name='nomContact_2'
+                                         value={this.state.nomContact_2}
                                          onChange={this.onChangeField.bind(this)}/>
                             <Form.Input label='Telephone Contact 2'
-                                        name='tel'
-                                        value={this.state.tel}
+                                        name='telContact_2'
+                                        value={this.state.telContact_2}
                                         onChange={this.onChangeField.bind(this)}/>
                         </Form.Group>
 

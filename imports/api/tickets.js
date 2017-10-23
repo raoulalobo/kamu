@@ -11,7 +11,7 @@ if ( Meteor.isServer ) {
     });
 
     Meteor.methods({
-        'tickets.insert'(  idPatient , nomPatient, idMedecin , nomMedecin, polices, tarifs, montant, observations  ){
+        'tickets.insert'(  idPatient , nomPatient, idMedecin , nomMedecin, polices, tarifs, montant , nonAssureEntreprise , nonAssureProfession , codeAssure , nomAssurePrincipal ,observations  ){
             if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
@@ -47,11 +47,27 @@ if ( Meteor.isServer ) {
                         type: Number,
                         label: 'Montant'
                     },
+                    nonAssureEntreprise : {
+                        type: String,
+                        label: 'Entreprise ( Non assure )'
+                    },
+                    nonAssureProfession : {
+                        type: String,
+                        label: 'Profession ( Non assure)'
+                    },
+                    codeAssure : {
+                        type: String,
+                        label: 'Code assure'
+                    },
+                    nomAssurePrincipal : {
+                        type: String,
+                        label: 'Nom assure principal'
+                    },
                     observations: {
                         type: String,
                         label: 'Observations'
                     }
-                }).validate({ idPatient , nomPatient, idMedecin , nomMedecin , polices, tarifs, montant, observations });
+                }).validate({ idPatient , nomPatient, idMedecin , nomMedecin , polices, tarifs, montant , nonAssureEntreprise , nonAssureProfession , codeAssure , nomAssurePrincipal ,observations });
             } catch (e) {
                 throw new Meteor.Error(400, e.message);
             }
@@ -65,6 +81,10 @@ if ( Meteor.isServer ) {
                 polices,
                 tarifs,
                 montant,
+                nonAssureEntreprise ,
+                nonAssureProfession ,
+                codeAssure ,
+                nomAssurePrincipal ,
                 observations,
                 creeLe: this.userId,
                 creePar : new Date().getTime(),

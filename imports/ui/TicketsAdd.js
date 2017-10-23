@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Button, Modal , Form, Message, Dropdown } from 'semantic-ui-react'
+import { Button, Modal , Form, Message, Checkbox } from 'semantic-ui-react'
 import { Patients } from '../api/patients';
 import { Polices } from '../api/polices';
 import {Tarifs} from "../api/tarifs";
@@ -21,12 +21,17 @@ export class TicketsAdd extends React.Component {
             tarifs: '',
             prix:0,
             autre:'',
+            nonAssureEntreprise:'RAS',
+            nonAssureProfession:'RAS',
+            codeAssure:'RAS',
+            nomAssurePrincipal:'RAS',
+            assure: false ,
             observations: '',
             error: ''
         };
     }
     onSubmit(e) {
-        const { patients, nomp, medecins, nomm , polices , taux, tarifs, prix, observations } = this.state;
+        const { patients, nomp, medecins, nomm , polices , taux, tarifs, prix, nonAssureEntreprise , nonAssureProfession , codeAssure , nomAssurePrincipal , observations } = this.state;
 
         e.preventDefault();
 
@@ -36,7 +41,7 @@ export class TicketsAdd extends React.Component {
 
             //console.log( `${patients} , ${nomp} , ${medecins} , ${nomm}  , ${polices} , ${tarifs} , ${montant} ` )
             console.log( typeof montant,montant );
-            Meteor.call('tickets.insert', patients , nomp , medecins, nomm ,polices , tarifs ,parseInt(montant) , observations , (err, res) => {
+            Meteor.call('tickets.insert', patients , nomp , medecins, nomm ,polices , tarifs ,parseInt(montant) , nonAssureEntreprise , nonAssureProfession , codeAssure , nomAssurePrincipal , observations , (err, res) => {
                 if (!err) {
                     this.handleClose();
                     Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
@@ -61,6 +66,11 @@ export class TicketsAdd extends React.Component {
             tarifs: '',
             prix:0,
             autre:'',
+            nonAssureEntreprise:'RAS',
+            nonAssureProfession:'RAS',
+            codeAssure:'RAS',
+            nomAssurePrincipal:'RAS',
+            assure: false ,
             observations: '',
             error: ''
         });
@@ -69,11 +79,24 @@ export class TicketsAdd extends React.Component {
         this.setState( { modalOpen: true } );
     }
     onChangeField(e, { name,id,value }) {
+
         this.setState( { [name] : value.split("+",2)[0] });
         this.setState( { [id] : parseInt( value.split("+",2)[1] ) || value.split("+",2)[1]  });
+        console.log(`${name} -> ${value}`)
+
+
         //console.log(`${name} -> ${value.split("+",2)[0]} et ${id} -> ${value.split("+",2)[1]}`);
         //console.log(`${this.state.taux} -> ${this.state.prix}`);
 
+    }
+    onChangeCheckBox(e) {
+        this.setState( { assure : !this.state.assure } );
+        this.setState({
+            nonAssureEntreprise:'RAS',
+            nonAssureProfession:'RAS',
+            codeAssure:'RAS',
+            nomAssurePrincipal:'RAS',
+        });
     }
     componentWillReceiveProps(nextProps) {
 
@@ -85,6 +108,42 @@ export class TicketsAdd extends React.Component {
     componentWillUnmount() {
         Meteor.subscribe('patients').stop()
         Meteor.subscribe('polices').stop()
+    }
+    assureForm(){
+        if ( this.state.assure  ) {
+            return(
+
+                <Form.Group widths='equal'>
+                    <Form.Input label='Code Assure'
+                                name='codeAssure'
+                                id='autre'
+                                value={this.state.codeAssure}
+                                onChange={this.onChangeField.bind(this)}/>
+                    <Form.Input label='Nom assure Principal'
+                                name='nomAssurePrincipal'
+                                id='autre'
+                                value={this.state.nomAssurePrincipal}
+                                onChange={this.onChangeField.bind(this)}/>
+                </Form.Group>
+            )
+        } else {
+            return(
+
+                <Form.Group widths='equal'>
+                    <Form.Input label='Entreprise (Non assures)'
+                                name='nonAssureEntreprise'
+                                id='autre'
+                                value={this.state.nonAssureEntreprise}
+                                onChange={this.onChangeField.bind(this)}
+                                />
+                    <Form.Input label='Profession (Non assures)'
+                                name='nonAssureProfession'
+                                id='autre'
+                                value={this.state.nonAssureProfession}
+                                onChange={this.onChangeField.bind(this)}/>
+                </Form.Group>
+            )
+        }
     }
     render() {
         const optionsPatients = this.props.patients;
@@ -109,7 +168,9 @@ export class TicketsAdd extends React.Component {
                         :
                         undefined}
                     <Form>
-
+                        <Form.Checkbox
+                            onChange={this.onChangeCheckBox.bind(this)}
+                            label='Cochez la case si le patient est assure' />
                         <Form.Group widths='equal'>
                             <Form.Dropdown
                                         label='Patients'
@@ -133,20 +194,8 @@ export class TicketsAdd extends React.Component {
                                 onChange={this.onChangeField.bind(this)}/>
 
                         </Form.Group>
-                        <Form.Group widths='equal'>
-                            <Form.Input label='Entreprise (Non assures)'
-                                        name='entreprise'/>
-                            <Form.Input label='Profession (Non assures)'
-                                        name='profession'/>
-                        </Form.Group>
 
-                        <Form.Group widths='equal'>
-                            <Form.Input label='Code Assure'
-                                        name='code'/>
-                            <Form.Input label='Nom Assure'
-                                        name='code'
-                                        id='noma'/>
-                        </Form.Group>
+                        {this.assureForm()}
 
                         <Form.Group widths='equal'>
                             <Form.Dropdown

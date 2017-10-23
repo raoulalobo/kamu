@@ -13,6 +13,7 @@ export class MainMenu extends Component {
             error: '',
             newPwd : '',
             old : '',
+            confirmNewPassword:'',
             currentUser : Meteor.user(),
             activeItem : '',
             menuColor: 'blue'
@@ -37,20 +38,26 @@ export class MainMenu extends Component {
         return true;
     }
     onSubmit(e) {
-        const { old , newPwd } = this.state;
+        const { old , newPwd , confirmNewPassword } = this.state;
 
         e.preventDefault();
 
         if ( old && newPwd ) {
 
-            Accounts.changePassword( old , newPwd , (err) => {
-                if (!err) {
-                    this.handleClose();
-                    //console.log('Utilisateur ajoute');
-                } else {
-                    this.setState({ error: err.reason });
-                }
-            });
+            if ( newPwd === confirmNewPassword) {
+                Accounts.changePassword( old , newPwd , (err) => {
+                    if (!err) {
+                        this.handleClose();
+                        //console.log('Utilisateur ajoute');
+                    } else {
+                        this.setState({ error: err.reason });
+                    }
+                });
+
+            } else {
+                his.setState({ error: 'Nouveaux mot de passe differents' });
+            }
+
 
         } else {
             this.setState({ error: 'All field are required' });
@@ -67,6 +74,11 @@ export class MainMenu extends Component {
             old: e.target.value
         });
     }
+    confirmNewPassword(e) {
+        this.setState({
+            confirmNewPassword: e.target.value
+        });
+    }
     handleOpen() {
         this.setState( { modalOpen: true } );
     }
@@ -75,6 +87,7 @@ export class MainMenu extends Component {
             modalOpen: false,
             error: '',
             old: '',
+            confirmNewPassword:'',
             newPwd: ''
         });
     }
@@ -226,8 +239,12 @@ export class MainMenu extends Component {
                                     <Form.Group widths='equal'>
                                         <Form.Input type="password" label='Ancien mot de passe' value={this.state.old}
                                                     onChange={this.onChangeOldPwd.bind(this)}/>
+                                    </Form.Group>
+                                    <Form.Group widths='equal'>
                                         <Form.Input type="password" label='Nouveau mot de passe' value={this.state.newPwd}
                                                     onChange={this.onChangeNewPwd.bind(this)}/>
+                                        <Form.Input type="password" label='Confirmer le nouveau mot de passe' value={this.state.confirmNewPassword}
+                                                    onChange={this.confirmNewPassword.bind(this)}/>
                                     </Form.Group>
                                     <Form.Button fluid basic color='blue'>Valider</Form.Button>
                                 </Form>
