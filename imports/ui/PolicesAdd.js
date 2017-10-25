@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { Router, Route, browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Button, Modal , Form, Message, Dropdown } from 'semantic-ui-react'
-import { Patients } from '../api/patients';
+import { Societes } from '../api/societes';
 
 export class PolicesAdd extends React.Component {
     constructor(props) {
@@ -59,20 +59,24 @@ export class PolicesAdd extends React.Component {
         this.setState( { [name] : value });
         console.log(`${name} -> ${value}`)
     }
-
     componentWillReceiveProps(nextProps) {
 
+        console.log(this.props);
+        console.log(nextProps)
 
     }
-
     componentWillUnmount() {
-
+        Meteor.subscribe('societes').stop();
     }
     render() {
+
+        const optionsSocietes = this.props.societes;
 
         return (
 
             <Modal
+                closeIcon
+                closeOnRootNodeClick={false}
                 onSubmit={this.onSubmit.bind(this)}
                 open={this.state.modalOpen}
                 onClose={this.handleClose.bind(this)}
@@ -91,18 +95,26 @@ export class PolicesAdd extends React.Component {
                     <Form>
 
                         <Form.Group widths='equal'>
+
                             <Form.Input label='Numero de police'
                                         name='numeroPolice'
                                         value={this.state.numeroPolice}
                                         onChange={this.onChangeField.bind(this)}/>
-                            <Form.Input label='Societe'
-                                        name='societe'
-                                        value={this.state.societe}
-                                        onChange={this.onChangeField.bind(this)}/>
+
+                            <Form.Dropdown
+                                label='Societe'
+                                minCharacters={0}
+                                name='societe'
+                                placeholder='Selectionnez 01 societe'
+                                search
+                                selection
+                                options={optionsSocietes}
+                                onChange={this.onChangeField.bind(this)}/>
 
                         </Form.Group>
 
                         <Form.Group widths='equal'>
+
                             <Form.Input label='Libelle'
                                         name='libelle'
                                         value={this.state.libelle}
@@ -112,6 +124,7 @@ export class PolicesAdd extends React.Component {
                                         name='tauxCouverture'
                                         value={this.state.tauxCouverture}
                                         onChange={this.onChangeField.bind(this)}/>
+
                         </Form.Group>
 
 
@@ -119,6 +132,7 @@ export class PolicesAdd extends React.Component {
                                        name='observations'
                                        value={this.state.observations}
                                        onChange={this.onChangeField.bind(this)}/>
+
                         <Form.Button fluid basic color='blue'>Ajouter et creer un police</Form.Button>
                     </Form>
                 </Modal.Content>
@@ -133,8 +147,19 @@ PolicesAdd.propTypes = {
 
 export default createContainer(() => {
 
+    const societesHandle = Meteor.subscribe('societes');
+    const loading = !societesHandle.ready() ;
+
     return {
-        Session
+        Session,
+        loading,
+        societes : Societes.find({visible: true}).fetch().map((societe)=>{
+            return {
+                key: societe._id,
+                text: societe.societe,
+                value: societe.code
+            }
+        }),
     };
 
 }, PolicesAdd );

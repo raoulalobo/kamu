@@ -79,6 +79,10 @@ export class Usrs extends React.Component{
                                             Prestations et tarifs
                                         </Menu.Item>
 
+                                        <Menu.Item name='societes' onClick={this.onChangeField.bind(this)}>
+                                            Entreprises
+                                        </Menu.Item>
+
                                         <Menu.Item name='stocks' onClick={this.onChangeField.bind(this)}>
                                             Stocks et magasin
                                         </Menu.Item>

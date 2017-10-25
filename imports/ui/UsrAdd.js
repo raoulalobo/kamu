@@ -101,13 +101,14 @@ export default class UsrAdd extends React.Component {
             <div className="mrgnButton">
 
                 <Modal
+                    closeIcon
                     closeOnRootNodeClick={false}
                     onSubmit={this.onSubmit.bind(this)}
                     open={this.state.modalOpen}
                     onClose={this.handleClose.bind(this)}
                     dimmer='blurring'
                     size='small'
-                    trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter 01  utilisateur</Button>} closeIcon>
+                    trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter 01  utilisateur</Button>}>
                     <Modal.Header>Ajouter 01  utilisateur</Modal.Header>
                     <Modal.Content >
                         {this.state.error ?

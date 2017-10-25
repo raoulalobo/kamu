@@ -56,6 +56,8 @@ export default class DroitsAdd extends React.Component {
             <div className="mrgnButton">
 
                 <Modal
+                    closeIcon
+                    closeOnRootNodeClick={false}
                     onSubmit={this.onSubmit.bind(this)}
                     open={this.state.modalOpen}
                     onClose={this.handleClose.bind(this)}

@@ -68,6 +68,8 @@ export class TarifsAdd extends React.Component {
         return (
 
             <Modal
+                closeIcon
+                closeOnRootNodeClick={false}
                 onSubmit={this.onSubmit.bind(this)}
                 open={this.state.modalOpen}
                 onClose={this.handleClose.bind(this)}

@@ -220,6 +220,8 @@ export class MainMenu extends Component {
                     <Menu.Menu position='right'>
 
                         <Modal
+                            closeIcon
+                            closeOnRootNodeClick={false}
                             onSubmit={this.onSubmit.bind(this)}
                             open={this.state.modalOpen}
                             onClose={this.handleClose.bind(this)}
