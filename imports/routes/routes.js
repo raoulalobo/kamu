@@ -11,6 +11,7 @@ import Patients from '../ui/Patients';
 import Tickets from '../ui/Tickets';
 import NotFound from '../ui/NotFound';
 import FicheMedicale from '../ui/FicheMedicale';
+import Transactions from '../ui/Transactions';
 
 export const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
     const isUnauthenticatedPage = currentPagePrivacy === 'unauth';
@@ -57,6 +58,7 @@ export const routes = (
             <Route path="/homepage" component={HomePage} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage} />
             <Route path="/patients" component={Patients} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage} />
             <Route path="/tickets" component={Tickets} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage} />
+            <Route path="/transactions" component={Transactions} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage} />
             <Route path="/fiches-medicales" component={FicheMedicale} privacy="auth" nomane={rls_2} onEnter={onEnterRolePage} />
             <Route path="/" component={Login} privacy="unauth" nomane="joedoe5"/>
             <Route path="*" component={NotFound}/>

@@ -4,6 +4,9 @@ import PolicesList from "./PolicesList";
 import StocksList from "./StocksList";
 import TarifsList from "./TarifsList";
 import SocietesList from "./SocietesList";
+import TransactionsList from "./TransactionsList";
+import SoinsList from "./SoinsList";
+import RdvsList from "./RdvsList";
 
 class ComposantsList extends Component {
     components = {
@@ -12,6 +15,9 @@ class ComposantsList extends Component {
         tarifs: TarifsList,
         stocks: StocksList,
         societes: SocietesList,
+        transactions: TransactionsList,
+        soins: SoinsList,
+        rdvs: RdvsList,
     };
     render() {
         const TagName = this.components[this.props.tag || 'usr'];

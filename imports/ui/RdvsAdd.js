@@ -7,26 +7,26 @@ import Flatpickr from 'react-flatpickr';
 import {fr} from 'flatpickr/dist/l10n/fr.js';
 import { Tickets } from '../api/tickets';
 
-export class SoinsAdd extends React.Component {
+export class RdvsAdd extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             modalOpen: false,
-            dateSoin: '',
+            dateRdv: '',
             tickets: '',
-            actes:'',
+            motifs:'',
             observations: '',
             error: ''
         };
     }
     onSubmit(e) {
-        const { dateSoin, tickets, actes, observations } = this.state;
+        const { dateRdv, tickets, motifs, observations } = this.state;
 
         e.preventDefault();
 
-        if ( dateSoin && tickets && actes && observations  ) {
+        if ( dateRdv && tickets && motifs && observations  ) {
 
-            Meteor.call('soins.insert', dateSoin , tickets.toLowerCase() , actes , observations , (err, res) => {
+            Meteor.call('rdvs.insert', dateRdv , tickets.toLowerCase() , motifs , observations , (err, res) => {
                 if (!err) {
                     this.handleClose();
                     Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
@@ -42,9 +42,9 @@ export class SoinsAdd extends React.Component {
     handleClose() {
         this.setState({
             modalOpen: false,
-            dateSoin:'',
+            dateRdv:'',
             tickets: '',
-            actes:'',
+            motifs:'',
             observations: '',
             error: ''
         });
@@ -65,7 +65,7 @@ export class SoinsAdd extends React.Component {
 
     }
     componentWillUnmount() {
-        //Meteor.subscribe('tickets').stop()
+        Meteor.subscribe('tickets').stop()
     }
     render() {
         const optionsTickets = this.props.tickets;
@@ -79,8 +79,8 @@ export class SoinsAdd extends React.Component {
                 open={this.state.modalOpen}
                 onClose={this.handleClose.bind(this)}
                 size='small'
-                trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter 01 soin</Button>}>
-                <Modal.Header>Ajouter 01 soin</Modal.Header>
+                trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter 01 rdv</Button>}>
+                <Modal.Header>Ajouter 01 rdv</Modal.Header>
                 <Modal.Content >
                     {this.state.error ?
                         <Message negative>
@@ -92,16 +92,16 @@ export class SoinsAdd extends React.Component {
                     <Form>
 
                         <Form.Group widths='equal'>
-                            
+
                             <div className='field'>
-                                <label>Date Soin</label>
+                                <label>Date Rdv</label>
                                 <div className='ui input'>
                                     <Flatpickr
                                         as={Form.Field}
                                         data-enable-time
                                         onChange={ (startDate)  => {
-                                            this.setState( { dateSoin : startDate[0] } ) ;
-                                            console.log(this.state.dateSoin) ;
+                                            this.setState( { dateRdv : startDate[0] } ) ;
+                                            console.log(this.state.dateRdv) ;
                                         } }
                                         options={
                                             {
@@ -128,10 +128,10 @@ export class SoinsAdd extends React.Component {
 
                         </Form.Group>
 
-                        <Form.TextArea label='Actes'
-                                       name='actes'
+                        <Form.TextArea label='Motif'
+                                       name='motifs'
                                        id='autre'
-                                       value={this.state.actes}
+                                       value={this.state.motifs}
                                        onChange={this.onChangeField.bind(this)}/>
 
                         <Form.TextArea label='Observations'
@@ -139,7 +139,7 @@ export class SoinsAdd extends React.Component {
                                        id='autre'
                                        value={this.state.observations}
                                        onChange={this.onChangeField.bind(this)}/>
-                        <Form.Button fluid basic color='blue'>Ajouter et creer un soin</Form.Button>
+                        <Form.Button fluid basic color='blue'>Ajouter et creer un rdv</Form.Button>
                     </Form>
                 </Modal.Content>
             </Modal>
@@ -147,7 +147,7 @@ export class SoinsAdd extends React.Component {
     }
 }
 
-SoinsAdd.propTypes = {
+RdvsAdd.propTypes = {
     tickets: PropTypes.array
 };
 
@@ -168,4 +168,4 @@ export default createContainer(() => {
             }
         })
     };
-}, SoinsAdd );
+}, RdvsAdd );

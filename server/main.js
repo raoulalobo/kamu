@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
+import '../imports/api/transactions';
 import '../imports/api/users';
 import '../imports/api/societes';
 import '../imports/api/stocks';

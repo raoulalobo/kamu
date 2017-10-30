@@ -28,10 +28,10 @@ export default createContainer(() => {
 
     const usrsHandle = Meteor.subscribe('allUsers');
     const loading = !usrsHandle.ready();
-    const user = Meteor.user() || undefined ;
+    const user = Meteor.user() || {_id:'raoul', autre:'bof'} ;
 
     return {
         loading,
-        usrs: Meteor.users.find({_id:{$ne:user._id},roles:{$ne:"admin"}}).fetch()
+        usrs: Meteor.users.find({_id:{$ne:user._id },roles:{$ne:"admin"}}).fetch()
     };
 }, UsrsList);

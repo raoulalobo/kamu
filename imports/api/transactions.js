@@ -3,15 +3,15 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 
-export const Soins = new Mongo.Collection('soins');
+export const Transactions = new Mongo.Collection('transactions');
 
 if ( Meteor.isServer ) {
-    Meteor.publish('soins', function() {
-        return Soins.find({});
+    Meteor.publish('transactions', function() {
+        return Transactions.find({});
     });
 
     Meteor.methods({
-        'soins.insert'(  dateHeureSoin , idTicket , acte,  observations  ){
+        'transactions.insert'(  produit , type , qtte ,  observations  ){
             if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
@@ -19,43 +19,43 @@ if ( Meteor.isServer ) {
             try {
                 new SimpleSchema({
 
-                    dateHeureSoin: {
-                        type: Date,
-                        label: 'Date',
-                    },
-                    idTicket: {
+                    produit: {
                         type: String,
-                        label: 'ID du ticket',
+                        label: 'Produit',
                     },
-                    acte: {
+                    type: {
                         type: String,
-                        label: 'Acte',
+                        label: 'Type de transaction',
+                    },
+                    qtte: {
+                        type: Number,
+                        label: 'Quantite',
                     },
                     observations: {
                         type: String,
                         label: 'Observations'
                     }
-                }).validate({ dateHeureSoin, idTicket , acte,  observations });
+                }).validate({ produit, type , qtte,  observations });
             } catch (e) {
                 throw new Meteor.Error(400, e.message);
             }
 
-            return Soins.insert({
+            return Transactions.insert({
 
-                dateHeureSoin : dateHeureSoin.getTime(),
-                idTicket ,
-                acte,
+                produit ,
+                type ,
+                qtte,
                 observations,
                 creeLe: this.userId,
                 creePar : new Date().getTime(),
                 visible: true,
             } , (err,id)=>{ if (!err)
-            { console.log(`Soins : id ${idTicket} et nom : ${acte}`)}
+            { console.log(`Transactions : id ${id} et nom : ${produit}`)}
 
             });
         },
-        'soins.delete'(id) {
-            Soins.remove(id);
+        'transactions.delete'(id) {
+            Transactions.remove(id);
         }
     })
 

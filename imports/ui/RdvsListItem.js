@@ -5,7 +5,7 @@ import { Table } from 'semantic-ui-react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
-export class SocietesListItem extends Component {
+export class RdvsListItem extends Component {
 
     constructor (props) {
         super(props);
@@ -22,10 +22,10 @@ export class SocietesListItem extends Component {
 
     render () {
         return (
-            <Table.Row >
-                <Table.Cell>{this.props.societe.societe}</Table.Cell>
-                <Table.Cell>{this.props.societe.code}</Table.Cell>
-                <Table.Cell>{this.props.societe.observations}</Table.Cell>
+            <Table.Row>
+                <Table.Cell>{this.props.rdv.idTicket}</Table.Cell>
+                <Table.Cell>{this.props.rdv.motifRdv}</Table.Cell>
+                <Table.Cell>{this.props.rdv.observations}</Table.Cell>
             </Table.Row>
         );
     }
@@ -33,8 +33,8 @@ export class SocietesListItem extends Component {
 
 };
 
-SocietesListItem.propTypes = {
-    societe: PropTypes.object.isRequired,
+RdvsListItem.propTypes = {
+    rdv: PropTypes.object.isRequired,
     Session: PropTypes.object.isRequired
 };
 
@@ -46,4 +46,4 @@ export default createContainer(() => {
         user,
         call: Meteor.call,
     };
-}, SocietesListItem );
+}, RdvsListItem );

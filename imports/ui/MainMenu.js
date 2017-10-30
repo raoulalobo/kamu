@@ -136,11 +136,11 @@ export class MainMenu extends Component {
 
                     <Menu.Item
                         as={Link}
-                        to='/'
-                        name='pharmacie'
-                        active={activeItem === '/pharmacie'}>
-                        <Icon name='first aid' />
-                        Pharmacie
+                        to='/transactions'
+                        name='transactions'
+                        active={activeItem === '/transactions'}>
+                        <Icon name='exchange' />
+                        Stocks
                     </Menu.Item>
 
                     <Menu.Item

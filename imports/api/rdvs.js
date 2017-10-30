@@ -3,15 +3,15 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 
-export const Soins = new Mongo.Collection('soins');
+export const Rdvs = new Mongo.Collection('rdvs');
 
 if ( Meteor.isServer ) {
-    Meteor.publish('soins', function() {
-        return Soins.find({});
+    Meteor.publish('rdvs', function() {
+        return Rdvs.find({});
     });
 
     Meteor.methods({
-        'soins.insert'(  dateHeureSoin , idTicket , acte,  observations  ){
+        'rdvs.insert'(  dateHeureRdv , idTicket , motifRdv,  observations  ){
             if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
@@ -19,43 +19,43 @@ if ( Meteor.isServer ) {
             try {
                 new SimpleSchema({
 
-                    dateHeureSoin: {
+                    dateHeureRdv: {
                         type: Date,
                         label: 'Date',
                     },
                     idTicket: {
                         type: String,
-                        label: 'ID du ticket',
+                        label: 'ID du Ticket',
                     },
-                    acte: {
+                    motifRdv: {
                         type: String,
-                        label: 'Acte',
+                        label: 'Motif du rendez-vous',
                     },
                     observations: {
                         type: String,
                         label: 'Observations'
                     }
-                }).validate({ dateHeureSoin, idTicket , acte,  observations });
+                }).validate({ dateHeureRdv, idTicket , motifRdv,  observations });
             } catch (e) {
                 throw new Meteor.Error(400, e.message);
             }
 
-            return Soins.insert({
+            return Rdvs.insert({
 
-                dateHeureSoin : dateHeureSoin.getTime(),
+                dateHeureRdv : dateHeureRdv.getTime(),
                 idTicket ,
-                acte,
+                motifRdv,
                 observations,
                 creeLe: this.userId,
                 creePar : new Date().getTime(),
                 visible: true,
             } , (err,id)=>{ if (!err)
-            { console.log(`Soins : id ${idTicket} et nom : ${acte}`)}
+            { console.log(`Rdvs : id ${idTicket} et nom : ${motifRdv}`)}
 
             });
         },
-        'soins.delete'(id) {
-            Soins.remove(id);
+        'rdvs.delete'(id) {
+            Rdvs.remove(id);
         }
     })
 

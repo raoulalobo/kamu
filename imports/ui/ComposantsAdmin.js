@@ -4,6 +4,9 @@ import PolicesAdd from "./PolicesAdd";
 import TarifsAdd from "./TarifsAdd";
 import StocksAdd from "./StocksAdd";
 import SocietesAdd from "./SocietesAdd";
+import TransactionsAdd from "./TransactionsAdd";
+import SoinsAdd from "./SoinsAdd";
+import RdvsAdd from "./RdvsAdd";
 
 class ComposantsAdmin extends Component {
     components = {
@@ -12,6 +15,9 @@ class ComposantsAdmin extends Component {
         tarifs: TarifsAdd,
         stocks: StocksAdd,
         societes: SocietesAdd,
+        transactions: TransactionsAdd,
+        soins: SoinsAdd,
+        rdvs: RdvsAdd,
     };
     render() {
         const TagName = this.components[this.props.tag || 'usr'];
