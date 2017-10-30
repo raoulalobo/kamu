@@ -2,7 +2,8 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import Flatpickr from 'react-flatpickr';
 import {fr} from 'flatpickr/dist/l10n/fr.js';
-import { Router, Route, browserHistory } from 'react-router';
+import { createContainer } from 'meteor/react-meteor-data';
+//import { Router, Route, browserHistory } from 'react-router';
 import { Button, Modal , Form, Message } from 'semantic-ui-react'
 
 export default class PatientsAdd extends React.Component {

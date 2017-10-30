@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Button, Modal , Form, Message, Dropdown } from 'semantic-ui-react'
-import { Patients } from '../api/patients';
+import { Button, Modal , Form, Message } from 'semantic-ui-react'
+import { Tickets } from '../api/tickets';
 
 export class FicheMedicalesAdd extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             modalOpen: false,
-            patients: '',
+            tickets: '',
             medecins: '',
             poids: '',
             temperature: '',
@@ -27,26 +26,23 @@ export class FicheMedicalesAdd extends React.Component {
             diagnostique: '',
             ordonnance_traitement: '',
             surveillance: '',
-            rendez_vous: '',
             observations: '',
             currentUser : Meteor.user(),
             error: ''
         };
     }
     onSubmit(e) {
-        const { dateNaissance, nomEtPrenom , tel, observations, genre } = this.state;
+        const { tickets, medecins, poids, temperature, pie, fc, ta, glycemie, fre, spo2, motifs_consultation, histoire_maladie, antecedents, diagnostique, ordonnance_traitement, surveillance, observations } = this.state;
 
         e.preventDefault();
 
-        if ( dateNaissance && nomEtPrenom && tel && observations && genre  ) {
+        if ( tickets && medecins && poids && temperature && pie && fc && ta && glycemie && fre && spo2 && motifs_consultation && histoire_maladie && antecedents && diagnostique && ordonnance_traitement && surveillance && observations ) {
 
-            const identifiant = new Date().getTime()+nomEtPrenom.trim().toLowerCase().replace(/[ ]/g, "_").replace(/[']/g, "+");
-            console.log( identifiant ) ;
-            Meteor.call('patients.insert', dateNaissance , nomEtPrenom.trim().toLowerCase() ,tel.trim().toLowerCase() , genre, observations.trim().toLowerCase()  , (err, res) => {
+            
+            Meteor.call('tickets.insert', tickets, medecins, poids.trim(), temperature.trim(), pie.trim(), fc.trim(), ta.trim(), glycemie.trim(), fre.trim(), spo2.trim(), motifs_consultation.trim(), histoire_maladie.trim(), antecedents.trim(), diagnostique.trim(), ordonnance_traitement.trim(), surveillance.trim() , observations.trim()  , (err, res) => {
                 if (!err) {
                     this.handleClose();
                     Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
-                    browserHistory.replace('/ficheMedicales');
                 } else {
                     this.setState({ error: err.reason });
                 }
@@ -59,7 +55,7 @@ export class FicheMedicalesAdd extends React.Component {
     handleClose() {
         this.setState({
             modalOpen: false,
-            patients: '',
+            tickets: '',
             medecins: '',
             poids: '',
             temperature: '',
@@ -75,7 +71,6 @@ export class FicheMedicalesAdd extends React.Component {
             diagnostique: '',
             ordonnance_traitement: '',
             surveillance: '',
-            rendez_vous: '',
             observations: '',
             error: ''
         });
@@ -89,13 +84,11 @@ export class FicheMedicalesAdd extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
 
-        const { patient,user } = nextProps;
+        const { user } = nextProps;
         if (user) {
             this.props.Session.set('userId', user._id);
             this.setState({currentUser: user._id});
         }
-        //console.log(this.props)
-        //console.log(nextProps)
 
     }
     componentWillReceiveProps(nextProps) {
@@ -104,11 +97,9 @@ export class FicheMedicalesAdd extends React.Component {
             this.props.Session.set('userId', user._id);
             this.setState({currentUser: user._id});
         }
-        //console.log(nextProps);
-        //console.log(this.props);
     }
     componentWillUnmount() {
-        Meteor.subscribe('patients').stop()
+        Meteor.subscribe('tickets').stop()
     }
     infirmierEtMedecin(){
         return(
@@ -135,11 +126,6 @@ export class FicheMedicalesAdd extends React.Component {
                                    value={this.state.surveillance}
                                    onChange={this.onChangeField.bind(this)}/>
 
-                    <Form.TextArea label='Rendez-vous'
-                                   name='rendez_vous'
-                                   value={this.state.rendez_vous}
-                                   onChange={this.onChangeField.bind(this)}/>
-
                     <Form.TextArea label='Observations'
                                    name='observations'
                                    value={this.state.observations}
@@ -149,7 +135,7 @@ export class FicheMedicalesAdd extends React.Component {
         }
     }
     render() {
-        const optionsPatients = this.props.patients;
+        const optionsTickets = this.props.tickets;
         const optionsUsers = this.props.usrs;
         return (
 
@@ -176,11 +162,11 @@ export class FicheMedicalesAdd extends React.Component {
                                 <Form.Dropdown
                                     label='Ticket Id'
                                     minCharacters={0}
-                                    name='patients'
-                                    placeholder='Selectionnez 01 patient'
+                                    name='tickets'
+                                    placeholder='Selectionnez 01 ticket'
                                     search
                                     selection
-                                    options={optionsPatients}
+                                    options={optionsTickets}
                                     onChange={this.onChangeField.bind(this)}/>
                             </Form.Group>
 
@@ -259,15 +245,15 @@ export class FicheMedicalesAdd extends React.Component {
 }
 
 FicheMedicalesAdd.propTypes = {
-    patients: PropTypes.array
+    tickets: PropTypes.array
 };
 
 export default createContainer(() => {
 
-    const patientsHandle = Meteor.subscribe('patients');
+    const ticketsHandle = Meteor.subscribe('tickets');
     const usrsHandle = Meteor.subscribe('allUsers');
     const user = Meteor.user() || undefined ;
-    const loading = !patientsHandle.ready() && !usrsHandle.ready();
+    const loading = !ticketsHandle.ready() && !usrsHandle.ready();
 
     return {
         Session,
@@ -280,11 +266,11 @@ export default createContainer(() => {
                 value: usr._id
             }
         }),
-        patients : Patients.find({visible: true}).fetch().map((patient)=>{
+        tickets : Tickets.find({visible: true}).fetch().map((ticket)=>{
             return {
-                key: patient._id,
-                text: patient.nomEtPrenom,
-                value: patient.nomEtPrenom
+                key: ticket._id,
+                text: ticket._id.toLowerCase(),
+                value: ticket._id
             }
         })
     };

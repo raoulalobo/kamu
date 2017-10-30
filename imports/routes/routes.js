@@ -29,8 +29,10 @@ export const globalOnChange = (prevState, nextState) => {
 };
 export const globalOnEnter = (nextState) => {
     const lastRoute = nextState.routes[nextState.routes.length - 1];
-    //console.log(nextState);
+    console.log(nextState);
     Session.set('currentPagePrivacy', lastRoute.privacy);
+    Session.set('position', lastRoute.path);
+
     //Session.set('permissionRole', lastRoute.nomane);
 };
 
@@ -39,14 +41,7 @@ const rls_1 = ['admin','infirmier'];
 const rls_2 = ['admin','medecin','infirmier'];
 
 const onEnterRolePage = (nextState) => {
-    //console.log(nextState);
-
-/*    const lastRoute = nextState.routes[nextState.routes.length - 1];
-    Session.set('permissionRole', lastRoute.nomane);
-    const permissionRole = Session.get('permissionRole');
-    if ( !Roles.userIsInRole(Meteor.userId(), permissionRole ) ) {
-        browserHistory.replace('/homepage');
-    }*/
+    console.log( `-> ${Session.get('position')}` );
 };
 
 export const routes = (

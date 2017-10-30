@@ -1,15 +1,38 @@
-import React, { Component }  from 'react';
-import { Grid , Header, Icon , Input, Label, Menu } from 'semantic-ui-react'
-
+import React  from 'react';
+import { Grid , Header, Icon ,  Menu } from 'semantic-ui-react'
+import { createContainer } from 'meteor/react-meteor-data';
 import MainMenu from './MainMenu';
-import FicheMedicalAdd from './FicheMedicalAdd';
+import ComposantsAdmin from "./ComposantsAdmin";
+import ComposantsList from "./ComposantsList";
 
 
-export default class FicheMedicales extends React.Component{
-    constructor(props) {
+export class FicheMedicales extends React.Component{
+    constructor (props) {
         super(props);
+        this.state = {
+            currentUser : Meteor.user(),
+            affichage: 'soins',
+        }
     }
-
+    componentWillMount(nextState){
+        //console.log(nextState);
+        //console.log( `-> ${this.props.Session.get('position')}` );
+    }
+    componentDidMount(nextState){
+        //console.log(nextState);
+        //console.log( `-> ${this.props.Session.get('position')}` );
+    }
+    componentWillReceiveProps(nextProps,nextState) {
+        const { affichage } = nextState;
+        console.log(nextState);
+    }
+    componentWillUpdate(nextProps, nextState){
+        const { affichage } = nextState;
+        console.log(nextState);
+    }
+    onChangeField(e, { name }) {
+        this.setState( { affichage : name });
+    }
     render(){
         return (
             <div>
@@ -37,60 +60,32 @@ export default class FicheMedicales extends React.Component{
                             <Grid.Column width={3}>
                                 <Menu vertical>
 
-                                    <Menu.Item name='inbox'>
-                                        Fiches
-                                    </Menu.Item>
 
-                                    <Menu.Item name='spam'>
+                                    <Menu.Item name='soins' onClick={this.onChangeField.bind(this)}>
                                         Soins
                                     </Menu.Item>
 
-                                    <Menu.Item name='spam'>
-                                        Imagerie
-                                    </Menu.Item>
-
-                                    <Menu.Item name='spam'>
-                                        Labos
-                                    </Menu.Item>
-
-                                    <Menu.Item name='spam'>
+                                    <Menu.Item name='rdvs' onClick={this.onChangeField.bind(this)}>
                                         Rendez-vous
-                                    </Menu.Item>
-
-                                    <Menu.Item name='spam'>
-                                        Intervention autre medecin
-                                    </Menu.Item>
-
-                                    <Menu.Item name='updates'>
-                                        Evasan
-                                    </Menu.Item>
-
-                                    <Menu.Item name='updates'>
-                                        Autres menus ...
                                     </Menu.Item>
 
                                 </Menu>
                             </Grid.Column>
+
                             <Grid.Column width={13}>
                                 <Grid.Row>
-                                    <FicheMedicalAdd/>
+                                    <ComposantsAdmin  tag={this.state.affichage} />
+                                    <h2> </h2>
                                 </Grid.Row>
-
-                                <h2></h2>
-                                Rechercher un ficheMedicale {/*<DepartSearch/>*/}
-
                                 <Grid.Row>
-                                    Chiffre sur les ficheMedicales {/*<FicheMedicalesHelpBar/>*/}
+                                    <h2>*Barres de recherche et/ou filtres...</h2>
                                 </Grid.Row>
-
-                                <Grid.Row>
-                                    <h2></h2>
-                                    <div className="tableOverflow">
-                                        Liste de ficheMedicales {/*<FicheMedicalesList/>*/}
-                                    </div>
+                                <Grid.Row >
+                                    <h2> </h2>
+                                    <ComposantsList tag={this.state.affichage}/>
                                 </Grid.Row>
-
                             </Grid.Column>
+
 
                         </Grid.Row>
 
@@ -106,3 +101,14 @@ export default class FicheMedicales extends React.Component{
     }
 
 };
+
+FicheMedicales.propTypes = {
+};
+
+export default createContainer(() => {
+
+    return {
+        Session
+    };
+
+}, FicheMedicales);

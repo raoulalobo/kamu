@@ -20,7 +20,7 @@ class ComposantsAdmin extends Component {
         rdvs: RdvsAdd,
     };
     render() {
-        const TagName = this.components[this.props.tag || 'usr'];
+        const TagName = this.components[this.props.tag];
         return <TagName />
     }
 }
