@@ -10,6 +10,7 @@ import '../imports/api/polices';
 import '../imports/api/tickets';
 import '../imports/api/droits';
 import '../imports/api/patients';
+import '../imports/api/lits';
 import '../imports/startup/simple-schema-configuration.js';
 
 Meteor.startup(() => {

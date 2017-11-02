@@ -91,6 +91,10 @@ export class Usrs extends React.Component{
                                             Transactions
                                         </Menu.Item>
 
+                                        <Menu.Item name='lits' onClick={this.onChangeField.bind(this)}>
+                                            Lits
+                                        </Menu.Item>
+
                                     </Menu>
 
                                 </Grid.Column>

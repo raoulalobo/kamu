@@ -7,6 +7,7 @@ import SocietesList from "./SocietesList";
 import TransactionsList from "./TransactionsList";
 import SoinsList from "./SoinsList";
 import RdvsList from "./RdvsList";
+import LitsList from "./LitsList";
 
 class ComposantsList extends Component {
     components = {
@@ -18,6 +19,7 @@ class ComposantsList extends Component {
         transactions: TransactionsList,
         soins: SoinsList,
         rdvs: RdvsList,
+        lits : LitsList
     };
     render() {
         const TagName = this.components[this.props.tag || 'usr'];
