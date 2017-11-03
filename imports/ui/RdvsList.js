@@ -34,6 +34,7 @@ export class RdvsList extends React.Component{
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>Ticket_Id</Table.HeaderCell>
+                            <Table.HeaderCell>Date Rendez-vous</Table.HeaderCell>
                             <Table.HeaderCell>Motif</Table.HeaderCell>
                             <Table.HeaderCell>Observations</Table.HeaderCell>
                         </Table.Row>

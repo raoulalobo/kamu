@@ -1,5 +1,6 @@
 import React , { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Session } from 'meteor/session';
 import { Table } from 'semantic-ui-react';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -24,6 +25,7 @@ export class RdvsListItem extends Component {
         return (
             <Table.Row>
                 <Table.Cell>{this.props.rdv.idTicket}</Table.Cell>
+                <Table.Cell>{moment(this.props.rdv.dateHeureRdv).format('llll')}</Table.Cell>
                 <Table.Cell>{this.props.rdv.motifRdv}</Table.Cell>
                 <Table.Cell>{this.props.rdv.observations}</Table.Cell>
             </Table.Row>
