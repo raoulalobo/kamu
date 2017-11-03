@@ -11,7 +11,7 @@ export class FicheMedicales extends React.Component{
         super(props);
         this.state = {
             currentUser : Meteor.user(),
-            affichage: 'soins',
+            affichage: 'fiches',
         }
     }
     componentWillMount(nextState){
@@ -60,6 +60,9 @@ export class FicheMedicales extends React.Component{
                             <Grid.Column width={3}>
                                 <Menu vertical>
 
+                                    <Menu.Item name='fiches' onClick={this.onChangeField.bind(this)}>
+                                        Fiches Medicales
+                                    </Menu.Item>
 
                                     <Menu.Item name='soins' onClick={this.onChangeField.bind(this)}>
                                         Soins

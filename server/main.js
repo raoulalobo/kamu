@@ -11,6 +11,7 @@ import '../imports/api/tickets';
 import '../imports/api/droits';
 import '../imports/api/patients';
 import '../imports/api/lits';
+import '../imports/api/rdvs';
 import '../imports/startup/simple-schema-configuration.js';
 
 Meteor.startup(() => {
