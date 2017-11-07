@@ -122,7 +122,7 @@ export class MainMenu extends Component {
                         name='tickets'
                         active={activeItem === '/tickets'}>
                         <Icon name='ticket' />
-                        Tickets
+                        Evenement
                     </Menu.Item>
 
                     <Menu.Item

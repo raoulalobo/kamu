@@ -8,6 +8,7 @@ import TransactionsAdd from "./TransactionsAdd";
 import SoinsAdd from "./SoinsAdd";
 import RdvsAdd from "./RdvsAdd";
 import LitsAdd from "./LitsAdd";
+import HostosAdd from "./HostosAdd";
 import FicheMedicalAdd from "./FicheMedicalAdd";
 
 class ComposantsAdmin extends Component {
@@ -21,7 +22,8 @@ class ComposantsAdmin extends Component {
         soins: SoinsAdd,
         rdvs: RdvsAdd,
         lits: LitsAdd,
-        fiches: FicheMedicalAdd
+        fiches: FicheMedicalAdd,
+        hostos: HostosAdd
     };
     render() {
         const TagName = this.components[this.props.tag];

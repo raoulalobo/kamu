@@ -42,7 +42,7 @@ export class FichesMedicalesList extends React.Component{
                     <Table.Body>
                         { this.props.lits.length === 0 ? <EmptyTableItem text="No Items, if is an unexpected result please contact the admin"/> : undefined }
                         { this.props.loading && !!this.props.lits.length ? <EmptyTableItem text="Loading Data , please wait ..."/>  : undefined }
-                        {!!this.props.lits.length && !this.props.loading ? ( this.props.Session.get('lits')  ).map( (lit) => { return <LitsListItem key={lit._id} lit={lit}/>; } ) : undefined }
+                        {!!this.props.lits.length && !this.props.loading ? ( this.props.Session.get('lits')  ).map( (lit) => { return <FichesMedicalesListItem key={lit._id} lit={lit}/>; } ) : undefined }
 
                     </Table.Body>
                 </Table>

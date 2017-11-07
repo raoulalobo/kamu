@@ -12,9 +12,6 @@ Tracker.autorun(() => {
     onAuthChange(isAuthenticated, currentPagePrivacy);
 });
 
-
-
-
 Meteor.startup(() => {
     ReactDOM.render(routes, document.getElementById('app'));
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Button, Modal , Form, Message, Checkbox } from 'semantic-ui-react'
+import { Button, Modal , Form, Message } from 'semantic-ui-react'
 import { Patients } from '../api/patients';
 import { Polices } from '../api/polices';
 import {Tarifs} from "../api/tarifs";
@@ -255,7 +255,7 @@ export default createContainer(() => {
         usrs: Meteor.users.find({roles:"medecin"}).fetch().map((usr)=>{
             return {
                 key: usr._id,
-                text: `${usr.emails[0].address}-${usr.profile.specialites}`,
+                text: `${usr.username} - ${usr.profile.specialites}`,
                 value: [usr._id,`${usr.emails[0].address}-${usr.profile.specialites}`].join("+")
             }
         }),

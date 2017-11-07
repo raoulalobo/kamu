@@ -45,6 +45,26 @@ if ( Meteor.isServer ) {
 
             });
         },
+        'lits.reserved'(_id ) {
+            if (!this.userId) {
+                throw new Meteor.Error('not-authorized');
+            }
+
+            new SimpleSchema({
+                _id: {
+                    type: String,
+                    min: 1
+                }
+            }).validate({ _id});
+
+            Lits.update({
+                _id
+            }, {
+                $set: {
+                    occupe : true
+                }
+            },(err)=>{ if (!err) { console.log('good modified ')}} );
+        },
         'lits.delete'(id) {
             Lits.remove(id);
         }

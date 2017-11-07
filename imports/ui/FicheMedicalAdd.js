@@ -22,7 +22,8 @@ export class FicheMedicalesAdd extends React.Component {
             spo2: '',
             motifs_consultation: '',
             histoire_maladie: '',
-            antecedents: '',
+            antecedents_m: '',
+            antecedents_f: '',
             diagnostique: '',
             ordonnance_traitement: '',
             surveillance: '',
@@ -38,7 +39,7 @@ export class FicheMedicalesAdd extends React.Component {
 
         if ( tickets && medecins && poids && temperature && pie && fc && ta && glycemie && fre && spo2 && motifs_consultation && histoire_maladie && antecedents && diagnostique && ordonnance_traitement && surveillance && observations ) {
 
-            
+
             Meteor.call('tickets.insert', tickets, medecins, poids.trim(), temperature.trim(), pie.trim(), fc.trim(), ta.trim(), glycemie.trim(), fre.trim(), spo2.trim(), motifs_consultation.trim(), histoire_maladie.trim(), antecedents.trim(), diagnostique.trim(), ordonnance_traitement.trim(), surveillance.trim() , observations.trim()  , (err, res) => {
                 if (!err) {
                     this.handleClose();
@@ -67,7 +68,8 @@ export class FicheMedicalesAdd extends React.Component {
             spo2: '',
             motifs_consultation: '',
             histoire_maladie: '',
-            antecedents: '',
+            antecedents_m: '',
+            antecedents_f: '',
             diagnostique: '',
             ordonnance_traitement: '',
             surveillance: '',
@@ -223,13 +225,13 @@ export class FicheMedicalesAdd extends React.Component {
 
 
                             <Form.TextArea label='Antecedents Personnels'
-                                           name='antecedents'
-                                           value={this.state.antecedents}
+                                           name='antecedents_m'
+                                           value={this.state.antecedents_m}
                                            onChange={this.onChangeField.bind(this)}/>
 
                             <Form.TextArea label='Antecedents Familiaux'
-                                           name='antecedents'
-                                           value={this.state.antecedents}
+                                           name='antecedents_f'
+                                           value={this.state.antecedents_f}
                                            onChange={this.onChangeField.bind(this)}/>
                         </div>
                         {this.medecinForm()}

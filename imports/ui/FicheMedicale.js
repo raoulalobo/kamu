@@ -72,6 +72,10 @@ export class FicheMedicales extends React.Component{
                                         Rendez-vous
                                     </Menu.Item>
 
+                                    <Menu.Item name='hostos' onClick={this.onChangeField.bind(this)}>
+                                        Hospitalisations
+                                    </Menu.Item>
+
                                 </Menu>
                             </Grid.Column>
 

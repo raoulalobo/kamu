@@ -66,7 +66,10 @@ export class UsrsListItem extends React.Component{
                 </List.Content>
                 {/*<Image avatar src='/assets/images/avatar/small/lena.png' />*/}
                 <List.Content>
-                    <List.Header>{this.props.usr.emails[0].address.split('@')[0]} / { !!this.props.usr.profile ? (this.props.usr.profile.specialites || 'Pas de specialite')  : 'Pas de profil'} / { !!this.props.usr.profile ? (this.props.usr.profile.telephone || 'Pas de telephone') : 'Pas de profil'}</List.Header>
+
+                    {/*<List.Header>{this.props.usr.emails[0].address.split('@')[0]} / { !!this.props.usr.profile ? (this.props.usr.profile.specialites || 'Pas de specialite')  : 'Pas de profil'} / { !!this.props.usr.profile ? (this.props.usr.profile.telephone || 'Pas de telephone') : 'Pas de profil'}</List.Header>*/}
+
+                    <List.Header>{this.props.usr.username} / { !!this.props.usr.profile ? (this.props.usr.profile.specialites || 'Pas de specialite')  : 'Pas de profil'} / { !!this.props.usr.profile ? (this.props.usr.profile.telephone || 'Pas de telephone') : 'Pas de profil'}</List.Header>
                     {!!this.props.usr.roles ? 'Role: '+this.props.usr.roles : 'Aucun role'}
                 </List.Content>
             </List.Item>
