@@ -33,6 +33,7 @@ export class StocksList extends React.Component{
                 <Table selectable singleLine>
                     <Table.Header>
                         <Table.Row>
+                            <Table.HeaderCell/>
                             <Table.HeaderCell>Libelle</Table.HeaderCell>
                             <Table.HeaderCell>Quantite</Table.HeaderCell>
                             <Table.HeaderCell>Observations</Table.HeaderCell>

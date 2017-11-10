@@ -54,6 +54,9 @@ if ( Meteor.isServer ) {
 
             });
         },
+        'transactions.entrees'(id) {
+            Transactions.remove(id);
+        },
         'transactions.delete'(id) {
             Transactions.remove(id);
         }

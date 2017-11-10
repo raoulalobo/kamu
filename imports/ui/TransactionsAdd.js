@@ -11,6 +11,7 @@ export class TransactionsAdd extends React.Component {
         this.state = {
             modalOpen: false,
             produit: '',
+            idProduit:'',
             type: '',
             qtte: '',
             observations: '',
@@ -18,16 +19,23 @@ export class TransactionsAdd extends React.Component {
         };
     }
     onSubmit(e) {
-        const { produit, type , qtte , observations } = this.state;
+        const { produit, idProduit ,type , qtte , observations } = this.state;
 
         e.preventDefault();
 
         if ( produit && type && qtte && observations ) {
 
+
             Meteor.call('transactions.insert', produit ,type , parseInt( qtte.trim() ) , observations , (err, res) => {
                 if (!err) {
-                    this.handleClose();
-                    Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
+                    Meteor.call(type, idProduit , parseInt( qtte.trim() )  , (err, res) => {
+                        if (!err) {
+                            this.handleClose();
+                            Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
+                        } else {
+                            this.setState({ error: err.reason });
+                        }
+                    });
                 } else {
                     this.setState({ error: err.reason });
                 }
@@ -41,6 +49,7 @@ export class TransactionsAdd extends React.Component {
         this.setState({
             modalOpen: false,
             produit: '',
+            idProduit:'',
             type: '',
             qtte: '',
             observations: '',
@@ -54,7 +63,11 @@ export class TransactionsAdd extends React.Component {
 
     onChangeField(e, { name,value }) {
         this.setState( { [name] : value });
-        console.log(`${name} -> ${value}`)
+        console.log(`${name} -> ${value}`);
+        if ( name === `produit`) {
+            console.log( `_Id  --> ${e.currentTarget.id}`);
+            this.setState( { 'idProduit' : e.currentTarget.id });
+        }
     }
     componentWillReceiveProps(nextProps) {
 
@@ -68,8 +81,8 @@ export class TransactionsAdd extends React.Component {
     render() {
 
         const optionsStocks = this.props.stocks;
-        const optionsType = [{ key: 'sorties905788', value: 'sorties',  text: 'sorties' },
-            { key: 'entrees276488', value: 'entrees',  text: 'entrees' }  ];
+        const optionsType = [{ key: 'sorties905788', value: 'stocks.sorties',  text: 'sorties' },
+            { key: 'entrees276488', value: 'stocks.entrees',  text: 'entrees' }  ];
 
         return (
 
@@ -156,7 +169,8 @@ export default createContainer(() => {
             return {
                 key: stock._id,
                 text: stock.libelle,
-                value: stock.libelle
+                value: stock.libelle,
+                id: stock._id
             }
         }),
     };

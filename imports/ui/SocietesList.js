@@ -33,6 +33,7 @@ export class SocietesList extends React.Component{
                 <Table selectable singleLine>
                     <Table.Header>
                         <Table.Row>
+                            <Table.HeaderCell/>
                             <Table.HeaderCell>Societe</Table.HeaderCell>
                             <Table.HeaderCell>code</Table.HeaderCell>
                             <Table.HeaderCell>Observations</Table.HeaderCell>

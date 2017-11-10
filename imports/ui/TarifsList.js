@@ -33,6 +33,7 @@ export class TarifsList extends React.Component{
                 <Table selectable singleLine>
                     <Table.Header>
                         <Table.Row>
+                            <Table.HeaderCell/>
                             <Table.HeaderCell>Libelle</Table.HeaderCell>
                             <Table.HeaderCell>Montant</Table.HeaderCell>
                             <Table.HeaderCell>desc</Table.HeaderCell>

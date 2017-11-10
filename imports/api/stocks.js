@@ -49,6 +49,30 @@ if ( Meteor.isServer ) {
 
             });
         },
+        'stocks.sorties'(_id, val) {
+            Stocks.update({
+                _id
+            }, {
+                $inc: { qtte : -val } ,
+                $set: {
+                    updatedAt : new Date().getTime(),
+                    qttAdd : val,
+                    updatedBy : this.userId
+                }
+            },(err)=>{ if (!err) { console.log(`MAJ : id ${_id} reussie `)} } );
+        },
+        'stocks.entrees'(_id, val) {
+            Stocks.update({
+                _id
+            }, {
+                $inc: { qtte : val } ,
+                $set: {
+                    updatedAt : new Date().getTime(),
+                    qttAdd : val,
+                    updatedBy : this.userId
+                }
+            },(err)=>{ if (!err) { console.log(`MAJ : id ${_id} reussie `)} } );
+        },
         'stocks.delete'(id) {
             Stocks.remove(id);
         }
