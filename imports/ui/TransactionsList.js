@@ -33,6 +33,7 @@ export class TransactionsList extends React.Component{
                 <Table selectable singleLine>
                     <Table.Header>
                         <Table.Row>
+                            <Table.HeaderCell/>
                             <Table.HeaderCell>Produit</Table.HeaderCell>
                             <Table.HeaderCell>Type</Table.HeaderCell>
                             <Table.HeaderCell>Quantite</Table.HeaderCell>
