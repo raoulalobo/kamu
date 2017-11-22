@@ -66,6 +66,7 @@ export class TransactionsAdd extends React.Component {
         console.log(`${name} -> ${value}`);
         if ( name === `produit`) {
             console.log( `_Id  --> ${e.currentTarget.id}`);
+            console.log( `_Id  --> ${e.currentTarget.title}`);
             this.setState( { 'idProduit' : e.currentTarget.id });
         }
     }
@@ -170,7 +171,8 @@ export default createContainer(() => {
                 key: stock._id,
                 text: stock.libelle,
                 value: stock.libelle,
-                id: stock._id
+                id: stock._id,
+                title: stock._id,
             }
         }),
     };

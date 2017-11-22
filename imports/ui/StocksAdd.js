@@ -11,18 +11,21 @@ export class StocksAdd extends React.Component {
             modalOpen: false,
             libelle: '',
             qtte:'',
+            qtteMin:'',
+            qtteMax:'',
+            telResponsables:'',
             observations: '',
             error: ''
         };
     }
     onSubmit(e) {
-        const { libelle, qtte, observations } = this.state;
+        const { libelle, qtte, qtteMin, qtteMax, telResponsables,  observations } = this.state;
 
         e.preventDefault();
 
         if ( libelle && qtte && observations  ) {
 
-            Meteor.call('stocks.insert', libelle ,parseInt( qtte.trim() )  , observations , (err, res) => {
+            Meteor.call('stocks.insert', libelle ,parseInt( qtte.trim() ) ,parseInt( qtteMin.trim() ) ,parseInt( qtteMax.trim() ), telResponsables  , observations , (err, res) => {
                 if (!err) {
                     this.handleClose();
                     Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
@@ -40,6 +43,9 @@ export class StocksAdd extends React.Component {
             modalOpen: false,
             libelle: '',
             qtte:'',
+            qtteMin:'',
+            qtteMax:'',
+            telResponsables:'',
             observations: '',
             error: ''
         });
@@ -91,6 +97,24 @@ export class StocksAdd extends React.Component {
                             <Form.Input label='Quantite'
                                         name='qtte'
                                         value={this.state.qtte}
+                                        onChange={this.onChangeField.bind(this)}/>
+                        </Form.Group>
+
+                        <Form.Group widths='equal'>
+                            <Form.Input label='Quantite min'
+                                        name='qtteMin'
+                                        value={this.state.qtteMin}
+                                        onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='Quantite max'
+                                        name='qtteMax'
+                                        value={this.state.qtteMax}
+                                        onChange={this.onChangeField.bind(this)}/>
+                        </Form.Group>
+
+                        <Form.Group widths='equal'>
+                            <Form.Input label='Telephones responsables ( separes par une virgule )'
+                                        name='telResponsables'
+                                        value={this.state.telResponsables}
                                         onChange={this.onChangeField.bind(this)}/>
                         </Form.Group>
 

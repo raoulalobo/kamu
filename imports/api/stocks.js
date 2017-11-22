@@ -11,7 +11,7 @@ if ( Meteor.isServer ) {
     });
 
     Meteor.methods({
-        'stocks.insert'(  libelle , qtte,  observations  ){
+        'stocks.insert'(  libelle , qtte, qtteMin, qtteMax, telResponsables,  observations  ){
             if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
@@ -27,11 +27,23 @@ if ( Meteor.isServer ) {
                         type: Number,
                         label: 'Quantite',
                     },
+                    qtteMin: {
+                        type: Number,
+                        label: 'Quantite min.',
+                    },
+                    qtteMax: {
+                        type: Number,
+                        label: 'Quantite max.',
+                    },
+                    telResponsables: {
+                        type: String,
+                        label: 'Telephones responsables',
+                    },
                     observations: {
                         type: String,
                         label: 'Observations'
                     }
-                }).validate({ libelle , qtte,  observations });
+                }).validate({ libelle , qtte, qtteMin, qtteMax, telResponsables, observations });
             } catch (e) {
                 throw new Meteor.Error(400, e.message);
             }
@@ -40,6 +52,9 @@ if ( Meteor.isServer ) {
 
                 libelle ,
                 qtte,
+                qtteMin,
+                qtteMax,
+                telResponsables,
                 observations,
                 creeLe: this.userId,
                 creePar : new Date().getTime(),
@@ -56,7 +71,7 @@ if ( Meteor.isServer ) {
                 $inc: { qtte : -val } ,
                 $set: {
                     updatedAt : new Date().getTime(),
-                    qttAdd : val,
+                    qttAdd : -val,
                     updatedBy : this.userId
                 }
             },(err)=>{ if (!err) { console.log(`MAJ : id ${_id} reussie `)} } );

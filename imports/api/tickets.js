@@ -11,7 +11,7 @@ if ( Meteor.isServer ) {
     });
 
     Meteor.methods({
-        'tickets.insert'(  idPatient , nomPatient, idMedecin , nomMedecin, polices, tarifs, montant , nonAssureEntreprise , nonAssureProfession , codeAssure , nomAssurePrincipal ,observations  ){
+        'tickets.insert'(  idPatient , nomPatient, idMedecin , nomMedecin, polices, tarifs, montant , nonAssureEntreprise , nonAssureProfession , codeAssure , nomAssurePrincipal , aPayer, prestations, observations  ){
             if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
@@ -63,11 +63,19 @@ if ( Meteor.isServer ) {
                         type: String,
                         label: 'Nom assure principal'
                     },
+                    aPayer : {
+                        type: String,
+                        label: 'A payer'
+                    },
+                    prestations : {
+                        type: String,
+                        label: 'Prestations'
+                    },
                     observations: {
                         type: String,
                         label: 'Observations'
                     }
-                }).validate({ idPatient , nomPatient, idMedecin , nomMedecin , polices, tarifs, montant , nonAssureEntreprise , nonAssureProfession , codeAssure , nomAssurePrincipal ,observations });
+                }).validate({ idPatient , nomPatient, idMedecin , nomMedecin , polices, tarifs, montant , nonAssureEntreprise , nonAssureProfession , codeAssure , nomAssurePrincipal , aPayer, prestations, observations });
             } catch (e) {
                 throw new Meteor.Error(400, e.message);
             }
@@ -85,6 +93,8 @@ if ( Meteor.isServer ) {
                 nonAssureProfession ,
                 codeAssure ,
                 nomAssurePrincipal ,
+                aPayer,
+                prestations,
                 observations,
                 creeLe: this.userId,
                 creePar : new Date().getTime(),
