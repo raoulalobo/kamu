@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Button, Modal , Form, Message } from 'semantic-ui-react'
 import { Patients } from '../api/patients';
@@ -77,18 +78,17 @@ export class TicketsAdd extends React.Component {
             observations: '',
             error: ''
         });
+        Session.set('tarifsMontants', 0 );
+        Session.set('policetauxCouverture', 0 );
     }
     handleOpen() {
         this.setState( { modalOpen: true } );
+        console.log(`handleOpen -> ${this.state.modalOpen}`)
+    }
+    shouldComponentUpdate(nextProps, nextState){
+        return true ;
     }
     componentWillUpdate(nextProps, nextState){
-
-        const { polices , policetauxCouverture, tarifs, tarifsMontants , aPayer } = nextState ;
-
-        const prepaidAmount = ( parseInt(tarifsMontants) * (parseInt(policetauxCouverture)/100) ) ;
-        const restToPay = parseInt(tarifsMontants) - prepaidAmount ;
-
-        console.log(`prepaidAmount -> ${prepaidAmount} and restToPay -> ${restToPay}`);
 
     }
     onChangeField(e, { name,id,value }) {
@@ -99,15 +99,21 @@ export class TicketsAdd extends React.Component {
         console.log(`${id} -> ${e.currentTarget.id}`);
 
         if ( ['polices','tarifs'].includes(name) ) {
+
             console.log( 'Doit modifier ');
-            const prepaidAmount = ( parseInt(this.state.tarifsMontants) * (parseInt(this.state.policetauxCouverture)/100) ) ;
-            const restToPay = parseInt(this.state.tarifsMontants) - prepaidAmount ;
-            this.state.aPayer = restToPay
+            Session.set([id], !!e.currentTarget.id ? parseInt(e.currentTarget.id) : 0 );
+            console.log(`tarifs -> ${Session.get('tarifsMontants')}  et taux -> ${Session.get('policetauxCouverture')}`);
+
+            const prepaidAmount = ( parseInt(Session.get('tarifsMontants')) * (parseInt(Session.get('policetauxCouverture'))/100) ) ;
+            const restToPay = parseInt(Session.get('tarifsMontants')) - prepaidAmount ;
+            this.setState( { aPayer : restToPay });
+            console.log(`A payer -> ${restToPay}`)
+            //const prepaidAmount = ( parseInt(this.state.tarifsMontants) * (parseInt(this.state.policetauxCouverture)/100) ) ;
+            //const restToPay = parseInt(this.state.tarifsMontants) - prepaidAmount ;
+            //this.setState( { aPayer : restToPay });
+            //console.log(`onChangeField -> ${this.state.aPayer }`);
         }
 
-
-        //console.log(`${name} -> ${value.split("+",2)[0]} et ${id} -> ${value.split("+",2)[1]}`);
-        //console.log(`${this.state.taux} -> ${this.state.prix}`);
 
     }
     onChangeCheckBox(e) {
@@ -244,7 +250,8 @@ export class TicketsAdd extends React.Component {
                             <Form.Input
                                 label='Reste a payer'
                                 name='aPayer'
-                                value={this.state.aPayer}/>
+                                value={this.state.aPayer}
+                                readOnly/>
 
 
                         </Form.Group>
