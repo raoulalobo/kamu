@@ -5,7 +5,7 @@ import { Table } from 'semantic-ui-react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
-export class LitsListItem extends Component {
+export class PrestationsListItem extends Component {
 
     constructor (props) {
         super(props);
@@ -23,8 +23,9 @@ export class LitsListItem extends Component {
     render () {
         return (
             <Table.Row>
-                <Table.Cell>{this.props.lit.libelle}</Table.Cell>
-                <Table.Cell>{this.props.lit.observations}</Table.Cell>
+                <Table.Cell>{this.props.prestation.libelle}</Table.Cell>
+                <Table.Cell>{this.props.prestation.occupe ? `Oui` : `Non`}</Table.Cell>
+                <Table.Cell>{this.props.prestation.observations}</Table.Cell>
             </Table.Row>
         );
     }
@@ -32,8 +33,8 @@ export class LitsListItem extends Component {
 
 };
 
-LitsListItem.propTypes = {
-    lit: PropTypes.object.isRequired,
+PrestationsListItem.propTypes = {
+    prestation: PropTypes.object.isRequired,
     Session: PropTypes.object.isRequired
 };
 
@@ -45,4 +46,4 @@ export default createContainer(() => {
         user,
         call: Meteor.call,
     };
-}, LitsListItem );
+}, PrestationsListItem );

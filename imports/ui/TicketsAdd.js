@@ -101,13 +101,14 @@ export class TicketsAdd extends React.Component {
         if ( ['polices','tarifs'].includes(name) ) {
 
             console.log( 'Doit modifier ');
-            Session.set([id], !!e.currentTarget.id ? parseInt(e.currentTarget.id) : 0 );
-            console.log(`tarifs -> ${Session.get('tarifsMontants')}  et taux -> ${Session.get('policetauxCouverture')}`);
+            Session.set([id], e.currentTarget.id );
+            console.log(`tarifs-> ${Session.get('tarifsMontants') } et taux-> ${Session.get('policetauxCouverture')}`);
 
-            const prepaidAmount = ( parseInt(Session.get('tarifsMontants')) * (parseInt(Session.get('policetauxCouverture'))/100) ) ;
-            const restToPay = parseInt(Session.get('tarifsMontants')) - prepaidAmount ;
-            this.setState( { aPayer : restToPay });
-            console.log(`A payer -> ${restToPay}`)
+            const prepaidAmount = ( Session.get('tarifsMontants') * (Session.get('policetauxCouverture'))/100)  ;
+            const restToPay = Session.get('tarifsMontants') - prepaidAmount ;
+            this.setState( { aPayer : !!restToPay ? parseInt(restToPay) : 0 });
+            console.log(`A payer -> ${restToPay}`);
+
             //const prepaidAmount = ( parseInt(this.state.tarifsMontants) * (parseInt(this.state.policetauxCouverture)/100) ) ;
             //const restToPay = parseInt(this.state.tarifsMontants) - prepaidAmount ;
             //this.setState( { aPayer : restToPay });
