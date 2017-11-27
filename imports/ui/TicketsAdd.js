@@ -21,7 +21,7 @@ export class TicketsAdd extends React.Component {
             polices: '',
             policetauxCouverture:0,
             tarifs: '',
-            tarifsMontants: 0,
+            tarifsMontants: 20000,
             autre:'',
             nonAssureEntreprise:'RAS',
             nonAssureProfession:'RAS',
@@ -35,13 +35,17 @@ export class TicketsAdd extends React.Component {
         };
     }
     onSubmit(e) {
-        const { patients, nomp, medecins, nomm , polices , policetauxCouverture, tarifs, tarifsMontants, nonAssureEntreprise , nonAssureProfession , codeAssure , nomAssurePrincipal , aPayer, prestations, observations } = this.state;
-
+        const { patients, nomp, medecins, nomm , polices , policetauxCouverture, tarifs, tarifsMontants, nonAssureEntreprise , nonAssureProfession , codeAssure , nomAssurePrincipal , assure , aPayer, prestations, observations } = this.state;
+        let ass ;
         e.preventDefault();
+
+        if ( assure ) {
+             ass = ( tarifsMontants *(25/100) )
+        } else {  ass = 0 }
 
         if ( patients && medecins && polices && tarifs && aPayer && prestations && observations ) {
 
-            const montant = tarifsMontants - ( tarifsMontants *(policetauxCouverture/100) ) ;
+            const montant = (tarifsMontants - ass) - ( (tarifsMontants- ass) *(policetauxCouverture/100) )  ;
 
             //console.log( `${patients} , ${nomp} , ${medecins} , ${nomm}  , ${polices} , ${tarifs} , ${montant} ` )
             console.log( typeof montant,montant );
@@ -68,7 +72,7 @@ export class TicketsAdd extends React.Component {
             polices: '',
             policetauxCouverture:0,
             tarifs: '',
-            tarifsMontants:0,
+            tarifsMontants:20000,
             nonAssureEntreprise:'RAS',
             nonAssureProfession:'RAS',
             codeAssure:'RAS',
@@ -103,11 +107,17 @@ export class TicketsAdd extends React.Component {
 
             console.log( 'Doit modifier ');
             Session.set([id], e.currentTarget.id );
+
             console.log(`tarifs-> ${Session.get('tarifsMontants') } et taux-> ${Session.get('policetauxCouverture')}`);
 
-            const prepaidAmount = ( Session.get('tarifsMontants') * (Session.get('policetauxCouverture'))/100)  ;
-            const restToPay = Session.get('tarifsMontants') - prepaidAmount ;
+            const montantDeBase =  Session.get('tarifsMontants') - ( Session.get('tarifsMontants') * Session.get('assureMontant') )
+
+            const prepaidAmount = ( montantDeBase * (Session.get('policetauxCouverture'))/100)  ;
+
+            const restToPay = montantDeBase - prepaidAmount ;
+
             this.setState( { aPayer : !!restToPay ? parseInt(restToPay) : 0 });
+
             console.log(`A payer -> ${restToPay}`);
 
             //const prepaidAmount = ( parseInt(this.state.tarifsMontants) * (parseInt(this.state.policetauxCouverture)/100) ) ;
@@ -126,6 +136,27 @@ export class TicketsAdd extends React.Component {
             codeAssure:'RAS',
             nomAssurePrincipal:'RAS',
         });
+        Session.set('assure', !this.state.assure );
+        console.log( Session.get('assure') ) ;
+        if (Session.get('assure') ) {
+            Session.set('assureMontant', 0.25 );
+            console.log( Session.get('assureMontant') ) ;
+        } else {
+            Session.set('assureMontant', 0 );
+            console.log( Session.get('assureMontant') ) ;
+        }
+
+        console.log(`tarifs-> ${Session.get('tarifsMontants') } et taux-> ${Session.get('policetauxCouverture')}`);
+
+        const montantDeBase =  Session.get('tarifsMontants') - ( Session.get('tarifsMontants') * Session.get('assureMontant') )
+
+        const prepaidAmount = ( montantDeBase * (Session.get('policetauxCouverture'))/100)  ;
+
+        const restToPay = montantDeBase - prepaidAmount ;
+
+        this.setState( { aPayer : !!restToPay ? parseInt(restToPay) : 0 });
+
+        console.log(`A payer -> ${restToPay}`);
     }
     componentWillReceiveProps(nextProps) {
 
