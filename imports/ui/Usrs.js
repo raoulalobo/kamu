@@ -76,11 +76,11 @@ export class Usrs extends React.Component{
                                         </Menu.Item>
 
                                         <Menu.Item name='tarifs' onClick={this.onChangeField.bind(this)}>
-                                            Tarifications
+                                            Prestations (ex tarification)
                                         </Menu.Item>
 
                                         <Menu.Item name='prestations' onClick={this.onChangeField.bind(this)}>
-                                            Prestations
+                                            Tarification (ex prestations)
                                         </Menu.Item>
 
                                         <Menu.Item name='societes' onClick={this.onChangeField.bind(this)}>

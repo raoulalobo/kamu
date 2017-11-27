@@ -11,7 +11,7 @@ if ( Meteor.isServer ) {
     });
 
     Meteor.methods({
-        'prestations.insert'(  libelle , observations  ){
+        'prestations.insert'(  libelle , montant , desc , observations  ){
             if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
@@ -21,13 +21,21 @@ if ( Meteor.isServer ) {
 
                     libelle: {
                         type: String,
-                        label: 'Libelle prestations',
+                        label: 'Libelle'
+                    },
+                    montant: {
+                        type: Number,
+                        label: 'Montant'
+                    },
+                    desc: {
+                        type: String,
+                        label: 'Description'
                     },
                     observations: {
                         type: String,
                         label: 'Observations'
                     }
-                }).validate({ libelle , observations });
+                }).validate({ libelle , montant , desc , observations });
             } catch (e) {
                 throw new Meteor.Error(400, e.message);
             }
@@ -35,35 +43,16 @@ if ( Meteor.isServer ) {
             return Prestations.insert({
 
                 libelle ,
+                montant ,
+                desc ,
                 observations,
-                occupe: false,
                 creeLe: this.userId,
                 creePar : new Date().getTime(),
                 visible: true,
             } , (err,id)=>{ if (!err)
-            { console.log(`Prestations : id ${id} et nom : ${libelle}`)}
+            { console.log(`Prestations : id ${id} et montant : ${numeroPrestation}`)}
 
             });
-        },
-        'prestations.reserved'(_id ) {
-            if (!this.userId) {
-                throw new Meteor.Error('not-authorized');
-            }
-
-            new SimpleSchema({
-                _id: {
-                    type: String,
-                    min: 1
-                }
-            }).validate({ _id});
-
-            Prestations.update({
-                _id
-            }, {
-                $set: {
-                    occupe : true
-                }
-            },(err)=>{ if (!err) { console.log('good modified ')}} );
         },
         'prestations.delete'(id) {
             Prestations.remove(id);

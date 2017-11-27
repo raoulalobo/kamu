@@ -19,8 +19,8 @@ export class PrestationsList extends React.Component{
     componentWillReceiveProps(nextProps) {
 
         const { prestations } = nextProps;
-        console.log(this.props);
-        console.log(nextProps);
+        console.log(this.props)
+        console.log(nextProps)
         this.props.Session.set('prestations', prestations);
 
     }
@@ -33,7 +33,10 @@ export class PrestationsList extends React.Component{
                 <Table selectable singleLine>
                     <Table.Header>
                         <Table.Row>
+                            <Table.HeaderCell/>
                             <Table.HeaderCell>Libelle</Table.HeaderCell>
+                            <Table.HeaderCell>Montant( en % )</Table.HeaderCell>
+                            <Table.HeaderCell>desc</Table.HeaderCell>
                             <Table.HeaderCell>Observations</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>

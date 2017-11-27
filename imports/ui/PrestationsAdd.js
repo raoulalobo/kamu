@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Button, Modal , Form, Message } from 'semantic-ui-react'
+import { Button, Modal , Checkbox , Form, Message } from 'semantic-ui-react'
 
 export class PrestationsAdd extends React.Component {
     constructor(props) {
@@ -10,18 +9,20 @@ export class PrestationsAdd extends React.Component {
         this.state = {
             modalOpen: false,
             libelle: '',
+            montant: '',
+            desc: '',
             observations: '',
             error: ''
         };
     }
     onSubmit(e) {
-        const { libelle, observations } = this.state;
+        const { libelle, montant , desc, observations } = this.state;
 
         e.preventDefault();
 
-        if ( libelle && observations  ) {
+        if ( libelle && montant && desc && observations ) {
 
-            Meteor.call('prestations.insert', libelle.toLowerCase() , observations , (err, res) => {
+            Meteor.call('prestations.insert', libelle.trim().toUpperCase() , parseInt( montant.trim() ) , desc , observations , (err, res) => {
                 if (!err) {
                     this.handleClose();
                     Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
@@ -38,23 +39,27 @@ export class PrestationsAdd extends React.Component {
         this.setState({
             modalOpen: false,
             libelle: '',
+            montant: '',
+            desc: '',
             observations: '',
             error: ''
         });
     }
+
     handleOpen() {
         this.setState( { modalOpen: true } );
     }
+
     onChangeField(e, { name,value }) {
         this.setState( { [name] : value });
-
+        console.log(`${name} -> ${value}`)
     }
+
     componentWillReceiveProps(nextProps) {
 
-        console.log(this.props);
-        console.log(nextProps)
 
     }
+
     componentWillUnmount() {
 
     }
@@ -68,6 +73,7 @@ export class PrestationsAdd extends React.Component {
                 onSubmit={this.onSubmit.bind(this)}
                 open={this.state.modalOpen}
                 onClose={this.handleClose.bind(this)}
+                dimmer='blurring'
                 size='small'
                 trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter 01 prestation</Button>}>
                 <Modal.Header>Ajouter 01 prestation</Modal.Header>
@@ -86,14 +92,26 @@ export class PrestationsAdd extends React.Component {
                                         name='libelle'
                                         value={this.state.libelle}
                                         onChange={this.onChangeField.bind(this)}/>
+                            <Form.Input label='Montant'
+                                        name='montant'
+                                        value={this.state.montant}
+                                        onChange={this.onChangeField.bind(this)}/>
+
                         </Form.Group>
+
+                        <Form.Group widths='equal'>
+                            <Form.Input label='Description'
+                                        name='desc'
+                                        value={this.state.desc}
+                                        onChange={this.onChangeField.bind(this)}/>
+                        </Form.Group>
+
 
                         <Form.TextArea label='Observations'
                                        name='observations'
-                                       id='autre'
                                        value={this.state.observations}
                                        onChange={this.onChangeField.bind(this)}/>
-                        <Form.Button fluid basic color='blue'>Creer un prestation</Form.Button>
+                        <Form.Button fluid basic color='blue'>Ajouter et creer un prestation</Form.Button>
                     </Form>
                 </Modal.Content>
             </Modal>
@@ -108,6 +126,7 @@ PrestationsAdd.propTypes = {
 export default createContainer(() => {
 
     return {
-
+        Session
     };
+
 }, PrestationsAdd );

@@ -11,7 +11,7 @@ if ( Meteor.isServer ) {
     });
 
     Meteor.methods({
-        'polices.insert'(  numeroPolice , societe , libelle, tauxCouverture, observations  ){
+        'polices.insert'(  numeroPolice , societe , plafond, tauxCouverture, observations  ){
             if (!this.userId) {
                 throw new Meteor.Error('not-authorized');
             }
@@ -27,9 +27,9 @@ if ( Meteor.isServer ) {
                         type: String,
                         label: 'Societe'
                     },
-                    libelle: {
-                        type: String,
-                        label: 'Libelle'
+                    plafond: {
+                        type: Number,
+                        label: 'Plafond'
                     },
                     tauxCouverture: {
                         type: Number,
@@ -39,7 +39,7 @@ if ( Meteor.isServer ) {
                         type: String,
                         label: 'Observations'
                     }
-                }).validate({ numeroPolice , societe , libelle, tauxCouverture, observations });
+                }).validate({ numeroPolice , societe , plafond, tauxCouverture, observations });
             } catch (e) {
                 throw new Meteor.Error(400, e.message);
             }
@@ -48,7 +48,7 @@ if ( Meteor.isServer ) {
 
                 numeroPolice ,
                 societe ,
-                libelle,
+                plafond,
                 tauxCouverture,
                 observations,
                 creeLe: this.userId,

@@ -1,9 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { Router, Route, browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Button, Modal , Form, Message, Dropdown } from 'semantic-ui-react'
+import { Button, Modal , Form, Message } from 'semantic-ui-react'
 import { Societes } from '../api/societes';
 
 export class PolicesAdd extends React.Component {
@@ -13,20 +11,20 @@ export class PolicesAdd extends React.Component {
             modalOpen: false,
             numeroPolice: '',
             societe: '',
-            libelle: '',
+            plafond: '',
             tauxCouverture: '',
             observations: '',
             error: ''
         };
     }
     onSubmit(e) {
-        const { numeroPolice, societe , libelle , tauxCouverture, observations } = this.state;
+        const { numeroPolice, societe , plafond , tauxCouverture, observations } = this.state;
 
         e.preventDefault();
 
-        if ( numeroPolice && societe && libelle && tauxCouverture && observations ) {
+        if ( numeroPolice && societe && plafond && tauxCouverture && observations ) {
 
-            Meteor.call('polices.insert', numeroPolice , societe ,libelle , parseInt( tauxCouverture.trim() ) , observations , (err, res) => {
+            Meteor.call('polices.insert', numeroPolice , societe ,parseInt( plafond.trim() )  , parseInt( tauxCouverture.trim() ) , observations , (err, res) => {
                 if (!err) {
                     this.handleClose();
                     Bert.alert( `enregistrement ${res} ajoute avec succes.`, 'danger', 'growl-top-right', 'fa-check'  )
@@ -44,7 +42,7 @@ export class PolicesAdd extends React.Component {
             modalOpen: false,
             numeroPolice: '',
             societe: '',
-            libelle: '',
+            plafond: '',
             tauxCouverture: '',
             observations: '',
             error: ''
@@ -115,9 +113,9 @@ export class PolicesAdd extends React.Component {
 
                         <Form.Group widths='equal'>
 
-                            <Form.Input label='Libelle'
-                                        name='libelle'
-                                        value={this.state.libelle}
+                            <Form.Input label='Plafond'
+                                        name='plafond'
+                                        value={this.state.plafond}
                                         onChange={this.onChangeField.bind(this)}/>
 
                             <Form.Input label='Taux de couverture'

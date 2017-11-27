@@ -23,7 +23,7 @@ export default class Tickets extends React.Component{
                         <Header as='h2'>
                             <Icon circular name='ticket' />
                             <Header.Content>
-                                Enregistrement des tickets
+                                Enregistrement des bons prestation
                                 <Header.Subheader>
                                     Note du KAMU : Apres insertion il sera impossible de supprimer !
                                 </Header.Subheader>
@@ -39,10 +39,10 @@ export default class Tickets extends React.Component{
                             </Grid.Row>
 
                             <h2></h2>
-                            Rechercher un ticket {/*<DepartSearch/>*/}
+                            Rechercher un bon prestation {/*<DepartSearch/>*/}
 
                             <Grid.Row>
-                                Chiffre sur les tickets {/*<TicketsHelpBar/>*/}
+                                Chiffre sur les bons prestation {/*<TicketsHelpBar/>*/}
                             </Grid.Row>
 
                             <Grid.Row>

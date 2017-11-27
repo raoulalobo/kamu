@@ -77,11 +77,11 @@ export class TarifsListItem extends Component {
     onDelete(e){
 
         e.preventDefault();
-        if ( this.props.police._id ) {
+        if ( this.props.tarif._id ) {
 
-            const suppression = confirm(`Voulez vous supprimer la police: ${this.props.police.libelle}`);
+            const suppression = confirm(`Voulez vous supprimer la tarif: ${this.props.tarif.libelle}`);
             if (suppression) {
-                Meteor.call('polices.delete', this.props.police._id , (err, res) => {
+                Meteor.call('tarifs.delete', this.props.tarif._id , (err, res) => {
                     if (!err) {
                         Bert.alert( 'element supprime avec succes.', 'danger', 'growl-top-right', 'fa-check'  )
                     } else {

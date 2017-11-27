@@ -7,6 +7,7 @@ import { Button, Modal , Form, Message } from 'semantic-ui-react'
 import { Patients } from '../api/patients';
 import { Polices } from '../api/polices';
 import {Tarifs} from "../api/tarifs";
+import {Prestations} from "../api/prestations";
 
 export class TicketsAdd extends React.Component {
     constructor(props) {
@@ -174,6 +175,7 @@ export class TicketsAdd extends React.Component {
         const optionsUsers = this.props.usrs;
         const optionsPolices = this.props.polices;
         const optionsTarifs = this.props.tarifs;
+        const optionsPrestations = this.props.prestations;
         return (
 
             <Modal
@@ -183,8 +185,8 @@ export class TicketsAdd extends React.Component {
                 open={this.state.modalOpen}
                 onClose={this.handleClose.bind(this)}
                 size='small'
-                trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter un ticket</Button>}>
-                <Modal.Header>Ajouter un ticket</Modal.Header>
+                trigger={<Button onClick={this.handleOpen.bind(this)} primary size='mini'>+ Ajouter un bon prestation</Button>}>
+                <Modal.Header>Ajouter 01 bon prestation</Modal.Header>
                 <Modal.Content >
                     {this.state.error ?
                         <Message negative>
@@ -235,7 +237,7 @@ export class TicketsAdd extends React.Component {
                                 onChange={this.onChangeField.bind(this)}/>
 
                             <Form.Dropdown
-                                label='Tarifs'
+                                label='Prestations'
                                 minCharacters={0}
                                 name='tarifs'
                                 id='tarifsMontants'
@@ -248,8 +250,19 @@ export class TicketsAdd extends React.Component {
 
                         <Form.Group widths='equal'>
 
+                            <Form.Dropdown
+                                label='Tarification horaire'
+                                minCharacters={0}
+                                name='prestations'
+                                id='prestationsMontants'
+                                placeholder='Selectionnez ...'
+                                search
+                                selection
+                                options={optionsPrestations}
+                                onChange={this.onChangeField.bind(this)}/>
+
                             <Form.Input
-                                label='Reste a payer'
+                                label='Ticket moderateur'
                                 name='aPayer'
                                 value={this.state.aPayer}
                                 readOnly/>
@@ -262,7 +275,7 @@ export class TicketsAdd extends React.Component {
                                        name='observations'
                                        value={this.state.observations}
                                        onChange={this.onChangeField.bind(this)}/>
-                        <Form.Button fluid basic color='blue'>Ajouter et creer un ticket</Form.Button>
+                        <Form.Button fluid basic color='blue'>Ajouter et creer 01 bon prestation</Form.Button>
                     </Form>
                 </Modal.Content>
             </Modal>
@@ -280,7 +293,8 @@ export default createContainer(() => {
     const policessHandle = Meteor.subscribe('polices');
     const usrsHandle = Meteor.subscribe('allUsers');
     const tarifsHandle = Meteor.subscribe('tarifs');
-    const loading = !patientsHandle.ready() && !usrsHandle.ready() && !policessHandle.ready() && !tarifsHandle.ready();
+    const prestationsHandle = Meteor.subscribe('prestations');
+    const loading = !patientsHandle.ready() && !usrsHandle.ready() && !policessHandle.ready() && !tarifsHandle.ready() && !prestationsHandle.ready();
 
     return {
         Session,
@@ -310,6 +324,14 @@ export default createContainer(() => {
             }
         }),
         tarifs : Tarifs.find({visible: true}).fetch().map((tarifs)=>{
+            return {
+                key: tarifs._id,
+                text: tarifs.libelle,
+                value: tarifs.libelle,
+                id : tarifs.montant
+            }
+        }),
+        prestations : Prestations.find({visible: true}).fetch().map((tarifs)=>{
             return {
                 key: tarifs._id,
                 text: tarifs.libelle,

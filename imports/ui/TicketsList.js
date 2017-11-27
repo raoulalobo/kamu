@@ -18,10 +18,11 @@ export class TicketsList extends React.Component{
     }
     componentWillReceiveProps(nextProps) {
 
-        const { tickets } = nextProps;
-        console.log(this.props)
-        console.log(nextProps)
+        const { tickets, Session } = nextProps;
         this.props.Session.set('tickets', tickets);
+        console.log(this.props);
+        console.log(nextProps);
+        console.log(Session);
 
     }
     componentWillUnmount() {

@@ -176,7 +176,7 @@ export class PolicesListItem extends Component {
                 <Table.Cell>{this.modifyButton()} {this.deleteButton()}</Table.Cell>
                 <Table.Cell>{this.props.police.numeroPolice}</Table.Cell>
                 <Table.Cell>{this.props.police.societe}</Table.Cell>
-                <Table.Cell>{this.props.police.libelle}</Table.Cell>
+                <Table.Cell>{this.props.police.plafond}</Table.Cell>
                 <Table.Cell>{this.props.police.tauxCouverture}</Table.Cell>
                 <Table.Cell>{this.props.police.observations}</Table.Cell>
             </Table.Row>
