@@ -51,8 +51,8 @@ export class UsrsListItem extends React.Component{
                                     placeholder='Select role'
                                     search
                                     selection
-                                    button
                                     options={options}
+                                    defaultValue={this.props.usr.roles}
                                     onChange={this.onChangeField.bind(this)} />
                                 <Button
                                     basic
